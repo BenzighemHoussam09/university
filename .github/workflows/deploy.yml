@@ -33,6 +33,6 @@ jobs:
             php artisan view:cache
             php artisan event:cache
 
-            sudo supervisorctl restart university-worker:*
+            sudo supervisorctl restart university-worker:* || true
 
             echo "Deploy done."
