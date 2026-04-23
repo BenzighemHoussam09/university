@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>National Excellence Exam - Session</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800;900&amp;family=Inter:wght@400;500;600&amp;family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "outline": "#707975",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#aec7f7",
+                      "secondary": "#465f88",
+                      "on-surface": "#191c1d",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#edeeef",
+                      "inverse-on-surface": "#f0f1f2",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#d9dadb",
+                      "on-primary-container": "#7ebdac",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#3f4945",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#004d40",
+                      "on-tertiary-fixed-variant": "#6d382a",
+                      "primary-fixed-dim": "#94d3c1",
+                      "surface-variant": "#e1e3e4",
+                      "surface-tint": "#29695b",
+                      "inverse-surface": "#2e3132",
+                      "primary": "#00342b",
+                      "on-secondary-fixed-variant": "#2e476f",
+                      "surface-container-high": "#e7e8e9",
+                      "outline-variant": "#bfc9c4",
+                      "primary-fixed": "#afefdd",
+                      "tertiary": "#4e2013",
+                      "secondary-container": "#b6d0ff",
+                      "inverse-primary": "#94d3c1",
+                      "tertiary-container": "#693527",
+                      "on-background": "#191c1d",
+                      "secondary-fixed": "#d6e3ff",
+                      "surface-bright": "#f8f9fa",
+                      "on-secondary-fixed": "#001b3d",
+                      "background": "#f8f9fa",
+                      "surface": "#f8f9fa",
+                      "on-primary-fixed": "#00201a",
+                      "surface-container-highest": "#e1e3e4",
+                      "on-tertiary-fixed": "#370e04",
+                      "secondary-container": "#b6d0ff",
+                      "on-secondary-container": "#3f5881",
+                      "on-primary-fixed-variant": "#065043",
+                      "tertiary-fixed-dim": "#ffb5a1",
+                      "on-tertiary-container": "#e89f8c",
+                      "on-primary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Public Sans", "sans-serif"],
+                      "body": ["Inter", "Cairo", "sans-serif"],
+                      "label": ["Inter", "Cairo", "sans-serif"]
+              },
+              "animation": {
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              }
+            },
+          }
+        }
+      </script>
+<style>
+        body { font-family: 'Inter', 'Cairo', sans-serif; }
+        .font-headline { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-emerald-950/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-sm">
+<div class="flex justify-between items-center px-6 py-4 w-full rtl">
+<div class="flex items-center gap-6">
+<span class="text-xl font-bold text-white tracking-widest font-headline">National Excellence Exam</span>
+<div class="h-6 w-px bg-emerald-800/50"></div>
+<div class="flex flex-col">
+<span class="text-emerald-100 font-bold text-sm">Module: Logic &amp; Ethics</span>
+<span class="text-emerald-500/80 text-xs">Section 1: Logic</span>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="bg-emerald-900/40 px-4 py-2 rounded-lg border border-emerald-800/30 flex items-center gap-3">
+<span class="material-symbols-outlined text-emerald-400" data-icon="timer">timer</span>
+<span class="text-emerald-400 font-headline font-bold text-lg tracking-tight">01:45:22</span>
+</div>
+<div class="flex items-center gap-3 text-emerald-100/70">
+<div class="text-left rtl:text-right">
+<p class="text-sm font-bold text-white">Amine Mansouri</p>
+<p class="text-xs opacity-60 uppercase">ID: 2024-AL-0982</p>
+</div>
+<span class="material-symbols-outlined text-3xl" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<div class="flex pt-20 pb-24 h-screen overflow-hidden">
+<!-- SideNavBar (Question Navigator) -->
+<aside class="bg-slate-50 dark:bg-emerald-950 h-full w-80 flex flex-col py-8 px-6 rtl flex-shrink-0">
+<div class="mb-6">
+<h3 class="font-headline font-black text-emerald-900 dark:text-emerald-500 text-lg mb-2">Question Navigator</h3>
+<p class="text-slate-500 text-sm">Progress: 12 of 50 answered</p>
+</div>
+<div class="grid grid-cols-5 gap-2 mb-8">
+<!-- Answered -->
+<button class="aspect-square flex items-center justify-center rounded-lg bg-emerald-800 text-white font-bold text-sm transition-all duration-300 ease-in-out">1</button>
+<button class="aspect-square flex items-center justify-center rounded-lg bg-emerald-800 text-white font-bold text-sm transition-all duration-300 ease-in-out">2</button>
+<button class="aspect-square flex items-center justify-center rounded-lg bg-emerald-800 text-white font-bold text-sm transition-all duration-300 ease-in-out">3</button>
+<!-- Current -->
+<button class="aspect-square flex items-center justify-center rounded-lg border-2 border-emerald-700 bg-emerald-50 text-emerald-700 font-bold text-sm transition-all duration-300 ease-in-out">4</button>
+<!-- Flagged -->
+<button class="aspect-square flex items-center justify-center rounded-lg bg-orange-100 text-orange-700 border border-orange-200 font-bold text-sm relative">
+                    5
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
+</button>
+<!-- Unanswered -->
+<button class="aspect-square flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 font-bold text-sm hover:bg-emerald-50 transition-all duration-300 ease-in-out">6</button>
+<button class="aspect-square flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 font-bold text-sm hover:bg-emerald-50 transition-all duration-300 ease-in-out">7</button>
+<button class="aspect-square flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 font-bold text-sm hover:bg-emerald-50 transition-all duration-300 ease-in-out">8</button>
+<button class="aspect-square flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 font-bold text-sm hover:bg-emerald-50 transition-all duration-300 ease-in-out">9</button>
+<button class="aspect-square flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 font-bold text-sm hover:bg-emerald-50 transition-all duration-300 ease-in-out">10</button>
+</div>
+<nav class="space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-emerald-700 font-bold border-r-4 border-emerald-700 bg-emerald-50">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span>Section 1: Logic</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-emerald-50 transition-all">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span>Section 2: Language</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-emerald-50 transition-all">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span>Section 3: Ethics</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-emerald-50 transition-all">
+<span class="material-symbols-outlined" data-icon="flag">flag</span>
+<span>Flagged Items</span>
+</div>
+</nav>
+<div class="mt-auto space-y-4">
+<button class="w-full py-3 px-4 bg-emerald-900/5 text-emerald-900 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-900/10 transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="functions">functions</span>
+                    View Formulas
+                </button>
+<div class="flex items-center gap-3 px-4 py-2 text-slate-400">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-sm">Technical Support</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-surface-container-low px-12 py-8 custom-scrollbar">
+<!-- Lockdown Warning Banner -->
+<div class="mb-10 bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-start gap-4">
+<div class="bg-orange-100 p-2 rounded-lg">
+<span class="material-symbols-outlined text-orange-600" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h4 class="text-orange-900 font-bold text-sm">Secure Browser Mode Active</h4>
+<p class="text-orange-800/80 text-xs mt-1 leading-relaxed">Your session is being monitored. Navigation away from this window or attempting to access external resources will result in an automatic submission and a report of academic integrity violation.</p>
+</div>
+</div>
+<!-- Question Card 1 -->
+<div class="mb-8 surface-container-lowest bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.06)] p-8 max-w-4xl mx-auto border-t-4 border-emerald-800">
+<div class="flex justify-between items-start mb-6">
+<div class="flex flex-col gap-1">
+<span class="text-primary font-headline font-black text-xs uppercase tracking-widest opacity-60">Question 4 of 50</span>
+<h2 class="text-on-surface font-body text-xl leading-relaxed font-semibold">إذا كانت كل الجمل المنطقية "أ" تؤدي إلى "ب"، وكانت "ب" تؤدي إلى "ج"، فما هي النتيجة الحتمية المترتبة على ذلك؟</h2>
+</div>
+<button class="text-slate-400 hover:text-orange-500 transition-colors flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined" data-icon="outlined_flag">outlined_flag</span>
+<span class="text-[10px] font-bold">Flag</span>
+</button>
+</div>
+<div class="space-y-4 mt-8">
+<label class="group flex items-center gap-4 p-5 rounded-xl border border-transparent bg-slate-50 hover:bg-emerald-50/50 cursor-pointer transition-all">
+<input class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-slate-300" name="q4" type="radio"/>
+<span class="text-on-surface-variant font-medium text-lg leading-relaxed">الجملة "أ" تؤدي بالضرورة إلى "ج"</span>
+</label>
+<label class="group flex items-center gap-4 p-5 rounded-xl border-2 border-emerald-700 bg-emerald-50 cursor-pointer transition-all shadow-sm">
+<input checked="" class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-emerald-700" name="q4" type="radio"/>
+<span class="text-emerald-900 font-bold text-lg leading-relaxed">الجملة "ج" تؤدي بالضرورة إلى "أ"</span>
+</label>
+<label class="group flex items-center gap-4 p-5 rounded-xl border border-transparent bg-slate-50 hover:bg-emerald-50/50 cursor-pointer transition-all">
+<input class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-slate-300" name="q4" type="radio"/>
+<span class="text-on-surface-variant font-medium text-lg leading-relaxed">لا توجد علاقة منطقية بين "أ" و "ج"</span>
+</label>
+<label class="group flex items-center gap-4 p-5 rounded-xl border border-transparent bg-slate-50 hover:bg-emerald-50/50 cursor-pointer transition-all">
+<input class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-slate-300" name="q4" type="radio"/>
+<span class="text-on-surface-variant font-medium text-lg leading-relaxed">العلاقة تعتمد على المعطيات الخارجية</span>
+</label>
+</div>
+</div>
+<!-- Question Card 2 -->
+<div class="mb-8 surface-container-lowest bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.06)] p-8 max-w-4xl mx-auto">
+<div class="flex justify-between items-start mb-6">
+<div class="flex flex-col gap-1">
+<span class="text-primary font-headline font-black text-xs uppercase tracking-widest opacity-60">Question 5 of 50</span>
+<h2 class="text-on-surface font-body text-xl leading-relaxed font-semibold">أي من الخيارات التالية يمثل "مغالطة منطقية" في سياق الحوار الفلسفي؟</h2>
+</div>
+<button class="text-orange-500 transition-colors flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined" data-icon="flag" style="font-variation-settings: 'FILL' 1;">flag</span>
+<span class="text-[10px] font-bold">Flagged</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-4 mt-8">
+<label class="group flex items-center gap-4 p-5 rounded-xl border border-transparent bg-slate-50 hover:bg-emerald-50/50 cursor-pointer transition-all">
+<input class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-slate-300" name="q5" type="radio"/>
+<span class="text-on-surface-variant font-medium text-lg leading-relaxed">الاستدلال المباشر من المقدمات</span>
+</label>
+<label class="group flex items-center gap-4 p-5 rounded-xl border border-transparent bg-slate-50 hover:bg-emerald-50/50 cursor-pointer transition-all">
+<input class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-slate-300" name="q5" type="radio"/>
+<span class="text-on-surface-variant font-medium text-lg leading-relaxed">الهجوم على الشخص بدلاً من الفكرة (Ad Hominem)</span>
+</label>
+<label class="group flex items-center gap-4 p-5 rounded-xl border border-transparent bg-slate-50 hover:bg-emerald-50/50 cursor-pointer transition-all">
+<input class="w-5 h-5 text-emerald-800 focus:ring-emerald-700 bg-white border-slate-300" name="q5" type="radio"/>
+<span class="text-on-surface-variant font-medium text-lg leading-relaxed">التحليل اللغوي للمفاهيم</span>
+</label>
+</div>
+</div>
+<div class="h-12"></div>
+</main>
+</div>
+<!-- BottomNavBar -->
+<footer class="fixed bottom-0 left-0 w-full bg-white/90 dark:bg-emerald-950/95 backdrop-blur-md z-50 rounded-t-2xl shadow-[0_-10px_30px_rgba(0,52,43,0.08)]">
+<div class="flex justify-between items-center px-8 py-4 rtl">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/40 border border-emerald-100 dark:border-emerald-800 transition-all duration-500">
+<div class="relative flex items-center justify-center">
+<span class="absolute inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</div>
+<div class="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-headline font-bold text-sm">
+<span class="material-symbols-outlined text-[18px] fill-emerald-500" data-icon="cloud_done" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span>تم الحفظ تلقائياً 12:01</span>
+</div>
+</div>
+<button class="flex items-center gap-2 text-slate-500 dark:text-emerald-100/40 font-headline font-semibold text-sm hover:text-emerald-700 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="outlined_flag">outlined_flag</span>
+<span>Flag Question</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-8 py-3 rounded-xl text-emerald-700 dark:text-emerald-400 font-bold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all border border-emerald-100 dark:border-emerald-800">
+                    Previous Question
+                </button>
+<button class="bg-emerald-800 text-white rounded-xl px-10 py-3 font-bold shadow-lg flex items-center gap-3 hover:opacity-95 active:scale-[0.97] transition-all">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+                    Submit Exam
+                </button>
+</div>
+</div>
+</footer>
+</body></html>

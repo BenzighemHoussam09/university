@@ -70,3 +70,10 @@ Exam score is auto-calculated; other components are manually entered by teacher 
 - Page is fully locked: no tab switching, no app switching (use `visibilitychange` + `blur` events via Alpine.js)
 - All questions visible at once (scroll, not paginated)
 - No back-navigation after final submission
+
+## Active Technologies
+- PHP 8.3 (Laravel 12 baseline is PHP ^8.2) + Laravel 12, Livewire 4, Alpine.js (shipped with Livewire), (001-exam-platform-backend)
+- MySQL 8 (single schema); InnoDB; UTF8MB4. Redis optional for queue/cache (001-exam-platform-backend)
+
+## Recent Changes
+- 001-exam-platform-backend: Added PHP 8.3 (Laravel 12 baseline is PHP ^8.2) + Laravel 12, Livewire 4, Alpine.js (shipped with Livewire),

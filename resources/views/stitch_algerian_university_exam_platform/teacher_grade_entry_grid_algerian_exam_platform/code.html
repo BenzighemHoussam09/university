@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#2e476f",
+                        "on-primary-fixed-variant": "#065043",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-highest": "#e1e3e4",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e1e3e4",
+                        "surface-dim": "#d9dadb",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#29695b",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#94d3c1",
+                        "secondary-fixed": "#d6e3ff",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#4e2013",
+                        "surface-bright": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "primary-container": "#004d40",
+                        "on-secondary-container": "#3f5881",
+                        "tertiary-fixed": "#ffdbd1",
+                        "background": "#f8f9fa",
+                        "on-background": "#191c1d",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-container": "#e89f8c",
+                        "on-primary-fixed": "#00201a",
+                        "tertiary-container": "#693527",
+                        "on-tertiary-fixed-variant": "#6d382a",
+                        "on-primary-container": "#7ebdac",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f0f1f2",
+                        "outline-variant": "#bfc9c4",
+                        "on-surface-variant": "#3f4945",
+                        "primary": "#00342b",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary-fixed-dim": "#aec7f7",
+                        "surface": "#f8f9fa",
+                        "primary-fixed": "#afefdd",
+                        "error": "#ba1a1a",
+                        "outline": "#707975",
+                        "tertiary-fixed-dim": "#ffb5a1",
+                        "surface-container": "#edeeef",
+                        "secondary": "#465f88",
+                        "inverse-primary": "#94d3c1",
+                        "on-tertiary-fixed": "#370e04",
+                        "secondary-container": "#b6d0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Public Sans", "Cairo"],
+                        "body": ["Inter", "Cairo"],
+                        "label": ["Inter", "Cairo"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Cairo', sans-serif; }
+        .font-public-sans { font-family: 'Public Sans', 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Scrollbar for the Digital Atheneum feel */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f3f4f5; }
+        ::-webkit-scrollbar-thumb { background: #00342b; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-white/70 dark:bg-emerald-950/70 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm dark:shadow-none flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tight text-emerald-900 dark:text-emerald-50 font-public-sans">Atheneum Portal</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-6 items-center">
+<span class="text-emerald-700/70 dark:text-emerald-300/70 hover:bg-emerald-50 dark:hover:bg-emerald-800/50 transition-colors px-3 py-2 rounded-lg cursor-pointer">Dashboard</span>
+<span class="text-emerald-900 dark:text-emerald-50 font-semibold px-3 py-2 rounded-lg">Grade Entry</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-emerald-900 hover:bg-emerald-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-emerald-900 hover:bg-emerald-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<img alt="Professor Profile" class="w-8 h-8 rounded-full border-2 border-primary-container" data-alt="Close-up portrait of an academic professor in a library setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApzLt_xYAH-slU-Wu-rUT8fCgeOljrVesfhUifrTIY-lF82mQucFAcRKZFEoj-WVYQNJFCEJCMO0Y4LwyEwrz2r5KtASUG5rZCictXYEaFS9o8YVx0GH06HxSLb8MHVB7gwA4sSGjNkkV18C5mjPHax3QK1hrpWuSM7ItG9Pu5Pbve_DS9vpTSwO2Th_xNJnWxPtKyhg1q4UW_GMCCGLttzLr_D8PhwqwrepJIK_p4MsX0xkGiIM_1eMvYK4XnQqKzSw4yXUC2sS8"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on Mobile, Visible on Desktop) -->
+<aside class="hidden lg:flex flex-col gap-y-2 py-4 h-screen w-64 fixed right-0 top-0 pt-20 bg-emerald-50 dark:bg-emerald-950 z-40 transition-all duration-200 ease-in-out">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-black text-emerald-900 dark:text-emerald-50 font-public-sans">Faculty Access</h2>
+<p class="text-xs text-emerald-700 dark:text-emerald-400">University of Algiers</p>
+</div>
+<nav class="flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-4 py-3 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-medium text-sm">Question Bank</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-emerald-100 dark:bg-emerald-800 text-emerald-900 dark:text-emerald-50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="grade">grade</span>
+<span class="font-medium text-sm">Grade Entry</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-medium text-sm">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-6 border-t border-emerald-100/30">
+<button class="w-full py-3 bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span>Create New Exam</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:mr-64 pt-24 pb-12 px-6 md:px-10 max-w-7xl mx-auto">
+<!-- Header -->
+<header class="mb-10">
+<h1 class="text-3xl font-extrabold text-on-surface mb-2 font-public-sans">قسم العلوم — رصد العلامات</h1>
+<p class="text-on-surface-variant max-w-2xl leading-relaxed">بوابة رصد الدرجات الأكاديمية لطلاب جامعة الجزائر. يرجى التأكد من دقة البيانات قبل الحفظ النهائي.</p>
+</header>
+<!-- Info Box (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+<div class="md:col-span-4 p-6 bg-primary-container text-on-primary-container rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative group">
+<!-- Decorative background shape -->
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
+<div class="relative z-10 flex items-center gap-4">
+<div class="bg-primary p-3 rounded-xl shadow-inner">
+<span class="material-symbols-outlined text-white" data-icon="info">info</span>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-none mb-1">حدود العلامات المعتمدة</h3>
+<p class="text-sm opacity-80">يجب الالتزام بالمعايير التالية لكل مكوّن تقييمي</p>
+</div>
+</div>
+<div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 flex-grow">
+<div class="flex flex-col border-r border-white/10 pr-4">
+<span class="text-[0.65rem] uppercase tracking-widest opacity-70 mb-1">الامتحان</span>
+<span class="text-xl font-bold">12 / 12</span>
+</div>
+<div class="flex flex-col border-r border-white/10 pr-4">
+<span class="text-[0.65rem] uppercase tracking-widest opacity-70 mb-1">العمل الشخصي</span>
+<span class="text-xl font-bold">04 / 04</span>
+</div>
+<div class="flex flex-col border-r border-white/10 pr-4">
+<span class="text-[0.65rem] uppercase tracking-widest opacity-70 mb-1">الحضور</span>
+<span class="text-xl font-bold">02 / 02</span>
+</div>
+<div class="flex flex-col pr-4">
+<span class="text-[0.65rem] uppercase tracking-widest opacity-70 mb-1">المشاركة</span>
+<span class="text-xl font-bold">02 / 02</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Grade Grid Container -->
+<section class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden mb-12">
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/10">
+<th class="sticky right-0 bg-surface-container-low px-6 py-5 font-bold text-primary z-20 w-64">اسم الطالب</th>
+<th class="px-6 py-5 font-bold text-primary">الامتحان (12)</th>
+<th class="px-6 py-5 font-bold text-primary">العمل الشخصي (4)</th>
+<th class="px-6 py-5 font-bold text-primary">الحضور (2)</th>
+<th class="px-6 py-5 font-bold text-primary">المشاركة (2)</th>
+<th class="px-6 py-5 font-bold text-primary">العلامة النهائية (20)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Student 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="sticky right-0 bg-white group-hover:bg-inherit px-6 py-4 font-semibold text-on-surface z-10 border-l border-outline-variant/5">أحمد بن محمد</td>
+<td class="px-6 py-4">
+<div class="bg-surface-container-low text-on-surface-variant px-4 py-2.5 rounded-lg w-20 text-center font-medium">10.5</div>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="3.5"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-primary/40 focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all border-2" type="text" value="2.0"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="1.5"/>
+</td>
+<td class="px-6 py-4">
+<div class="font-bold text-primary text-lg">17.5</div>
+</td>
+</tr>
+<!-- Student 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="sticky right-0 bg-white px-6 py-4 font-semibold text-on-surface z-10 border-l border-outline-variant/5">ليلى بن يوسف</td>
+<td class="px-6 py-4">
+<div class="bg-surface-container-low text-on-surface-variant px-4 py-2.5 rounded-lg w-20 text-center font-medium">08.0</div>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-block">
+<input class="bg-surface-container-highest border-error focus:border-error focus:ring-2 focus:ring-error/10 rounded-lg w-20 px-4 py-2 text-center transition-all border-2 text-error" type="text" value="5/4"/>
+<span class="absolute -bottom-5 right-0 text-[10px] text-error font-bold whitespace-nowrap">قيمة غير صالحة</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="1.0"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="2.0"/>
+</td>
+<td class="px-6 py-4">
+<div class="font-bold text-on-surface-variant opacity-50 text-lg">--</div>
+</td>
+</tr>
+<!-- Student 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="sticky right-0 bg-white px-6 py-4 font-semibold text-on-surface z-10 border-l border-outline-variant/5">ياسين قادري</td>
+<td class="px-6 py-4">
+<div class="bg-surface-container-low text-on-surface-variant px-4 py-2.5 rounded-lg w-20 text-center font-medium">11.0</div>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="4.0"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="2.0"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="2.0"/>
+</td>
+<td class="px-6 py-4">
+<div class="font-bold text-primary text-lg">19.0</div>
+</td>
+</tr>
+<!-- Student 4 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="sticky right-0 bg-white px-6 py-4 font-semibold text-on-surface z-10 border-l border-outline-variant/5">مريم سليماني</td>
+<td class="px-6 py-4">
+<div class="bg-surface-container-low text-on-surface-variant px-4 py-2.5 rounded-lg w-20 text-center font-medium">09.5</div>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="2.0"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="1.5"/>
+</td>
+<td class="px-6 py-4">
+<input class="bg-surface-container-highest border-transparent focus:border-primary focus:ring-2 focus:ring-surface-tint/20 rounded-lg w-20 px-4 py-2 text-center transition-all" type="text" value="1.0"/>
+</td>
+<td class="px-6 py-4">
+<div class="font-bold text-primary text-lg">14.0</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Footer Actions -->
+<footer class="flex flex-col md:flex-row items-center justify-between gap-6 bg-surface-container-low/50 p-6 rounded-2xl">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+<span class="text-sm text-on-surface-variant">آخر حفظ تلقائي: منذ دقيقتين</span>
+</div>
+<div class="flex gap-4">
+<button class="px-8 py-3.5 border-2 border-outline-variant/40 text-primary font-bold rounded-xl hover:bg-white transition-all active:scale-95">إلغاء التغييرات</button>
+<button class="px-10 py-3.5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="save" style="font-variation-settings: 'FILL' 1;">save</span>
+                    حفظ العلامات
+                </button>
+</div>
+</footer>
+</main>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-surface-container-high px-6 py-3 flex justify-around items-center z-50">
+<button class="flex flex-col items-center gap-1 text-emerald-900">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px]">الرئيسية</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-emerald-900 font-bold">
+<span class="material-symbols-outlined" data-icon="grade" style="font-variation-settings: 'FILL' 1;">grade</span>
+<span class="text-[10px]">العلامات</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-emerald-700/60">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px]">الإعدادات</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#94d3c1",
+                    "on-background": "#191c1d",
+                    "on-secondary-fixed": "#001b3d",
+                    "tertiary-container": "#693527",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#065043",
+                    "secondary-container": "#b6d0ff",
+                    "secondary-fixed-dim": "#aec7f7",
+                    "surface-container-low": "#f3f4f5",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "surface-variant": "#e1e3e4",
+                    "surface-container-highest": "#e1e3e4",
+                    "primary-fixed": "#afefdd",
+                    "primary": "#00342b",
+                    "primary-container": "#004d40",
+                    "on-tertiary-fixed": "#370e04",
+                    "on-secondary-fixed-variant": "#2e476f",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "tertiary": "#4e2013",
+                    "on-surface": "#191c1d",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#7ebdac",
+                    "tertiary-fixed": "#ffdbd1",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-secondary-container": "#3f5881",
+                    "surface-tint": "#29695b",
+                    "secondary-fixed": "#d6e3ff",
+                    "secondary": "#465f88",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f8f9fa",
+                    "on-primary-fixed": "#00201a",
+                    "outline": "#707975",
+                    "inverse-primary": "#94d3c1",
+                    "surface-container": "#edeeef",
+                    "tertiary-fixed-dim": "#ffb5a1",
+                    "on-tertiary-container": "#e89f8c",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#6d382a",
+                    "on-surface-variant": "#3f4945",
+                    "background": "#f8f9fa",
+                    "outline-variant": "#bfc9c4",
+                    "surface-dim": "#d9dadb",
+                    "surface-container-high": "#e7e8e9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Public Sans", "Cairo"],
+                    "body": ["Inter", "Cairo"],
+                    "label": ["Inter", "Cairo"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Cairo', sans-serif; }
+        .font-headline { font-family: 'Public Sans', 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-primary-gradient {
+            background: linear-gradient(135deg, #00342b 0%, #004d40 100%);
+        }
+        /* Focus state improvements for high-speed entry */
+        .rapid-input:focus-within {
+            border-color: #29695b;
+            box-shadow: 0 0 0 4px rgba(41, 105, 91, 0.1);
+        }
+        /* Custom RTL tweaks */
+        [dir="rtl"] .ml-auto { margin-left: 0; margin-right: auto; }
+        [dir="rtl"] .mr-auto { margin-right: 0; margin-left: auto; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 bg-slate-50 dark:bg-slate-900 py-6 sticky top-0 border-l border-slate-200 shadow-sm z-40">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-black text-emerald-900 font-headline">Academic Portal</h1>
+<p class="text-xs text-slate-500">Teacher Edition</p>
+</div>
+<nav class="flex-1 space-y-1 px-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200/50 transition-all rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-emerald-100/50 text-emerald-900 rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span>Question Bank</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200/50 transition-all rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+<span>Exam Designer</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200/50 transition-all rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Student Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200/50 transition-all rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<button class="w-full bg-primary-gradient text-on-primary py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                New Exam
+            </button>
+<div class="mt-6 border-t border-slate-200 pt-4">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200/50 transition-all rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-white/70 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center px-8 py-3 w-full shadow-sm shadow-emerald-900/5">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold text-emerald-900 font-headline tracking-tight">Atheneum Pro</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<input class="bg-slate-50/50 border-none rounded-full px-4 py-2 pr-10 text-sm focus:ring-2 focus:ring-surface-tint w-64" placeholder="بحث..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-slate-400 text-sm" data-icon="search">search</span>
+</div>
+<div class="flex items-center gap-2 text-emerald-900">
+<button class="p-2 hover:bg-emerald-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-emerald-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-primary-fixed shadow-sm">
+<img alt="Professor Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgbtSiLNrpecSiGywPN9ob8LtviZ7a7pgGTA4OPVifgJEEjag0MMgll9O8BIt9nx1S0vqLHZi37SUsf1wDAVI6hbXb3dH_Qed3zzHnfXu0TJqvPrGgj5JlfERr-8swlv_HRbL99noYTD8XLQllNfxWj8rgRULNlYqwlFNEFzM5yHovOw4PjwdVR9dov_wwPiyc28T3W2bHE2_q4vsSp4pHn7SxCM_QnOSqUHYQ4E_-Getr2ite_fvtmiF_Fth26AH-4rZIONxaDZ8"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<div class="p-8 lg:p-12 max-w-6xl w-full mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="space-y-2">
+<nav class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+<span>بنك الأسئلة</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_left">chevron_left</span>
+<span class="text-primary font-semibold">إنشاء سؤال</span>
+</nav>
+<h2 class="text-4xl font-black text-on-surface font-headline tracking-tight">إنشاء سؤال جديد</h2>
+<p class="text-slate-500 max-w-lg">قم بتصميم سؤالك الجديد بدقة. تذكر أن الوضوح هو مفتاح التقييم العادل للطلاب.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="px-6 py-3 rounded-lg border-2 border-outline-variant/20 text-slate-600 font-bold hover:bg-slate-100 transition-colors focus:ring-2 focus:ring-slate-400 outline-none">
+                        إلغاء
+                    </button>
+<button class="px-6 py-3 rounded-lg border-2 border-primary/20 text-primary font-bold hover:bg-emerald-50 transition-colors flex items-center gap-2 focus:ring-2 focus:ring-primary outline-none">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+                        حفظ وإضافة آخر
+                    </button>
+<button class="px-8 py-3 rounded-lg bg-primary-gradient text-on-primary font-bold shadow-xl shadow-emerald-900/20 hover:scale-[1.02] transition-transform focus:ring-2 focus:ring-primary focus:ring-offset-2 outline-none">
+                        حفظ السؤال
+                    </button>
+</div>
+</div>
+<!-- Form Body -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Primary Question Data -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Question Text Area -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border-r-4 border-primary transition-all focus-within:shadow-md">
+<label class="block text-sm font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="subject">subject</span>
+                            نص السؤال
+                        </label>
+<textarea class="w-full bg-surface-container-low border-2 border-transparent focus:border-primary/20 rounded-xl p-4 text-lg focus:ring-0 resize-none transition-all placeholder:text-slate-400 outline-none" placeholder="اكتب نص السؤال هنا بالتفصيل..." rows="4" tabindex="1"></textarea>
+</section>
+<!-- Choices Section -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+                                الخيارات
+                            </h3>
+<div class="flex items-center gap-4">
+<span class="text-error text-[10px] font-medium flex items-center gap-1 bg-error-container/20 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-sm" data-icon="error">error</span>
+                                    يجب تحديد إجابة صحيحة واحدة
+                                </span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Optimized Choice Inputs for Rapid Entry -->
+<div class="rapid-input group flex items-center gap-4 bg-white p-2 rounded-xl border-2 border-slate-100 transition-all focus-within:border-primary focus-within:bg-emerald-50/30">
+<label class="relative flex items-center cursor-pointer px-3">
+<input class="peer hidden" name="correct_answer" tabindex="-1" type="radio"/>
+<div class="w-6 h-6 border-2 border-slate-200 rounded-full peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+</label>
+<div class="flex-1">
+<span class="block text-[10px] font-bold text-slate-400 mb-0.5">الخيار أ</span>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface font-semibold placeholder:text-slate-300 outline-none" placeholder="أدخل الإجابة الأولى" tabindex="2" type="text"/>
+</div>
+<span class="hidden group-focus-within:block text-[10px] font-bold text-primary px-3 opacity-50">TAB</span>
+</div>
+<div class="rapid-input group flex items-center gap-4 bg-white p-2 rounded-xl border-2 border-slate-100 transition-all focus-within:border-primary focus-within:bg-emerald-50/30">
+<label class="relative flex items-center cursor-pointer px-3">
+<input class="peer hidden" name="correct_answer" tabindex="-1" type="radio"/>
+<div class="w-6 h-6 border-2 border-slate-200 rounded-full peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+</label>
+<div class="flex-1">
+<span class="block text-[10px] font-bold text-slate-400 mb-0.5">الخيار ب</span>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface font-semibold placeholder:text-slate-300 outline-none" placeholder="أدخل الإجابة الثانية" tabindex="3" type="text"/>
+</div>
+</div>
+<div class="rapid-input group flex items-center gap-4 bg-white p-2 rounded-xl border-2 border-slate-100 transition-all focus-within:border-primary focus-within:bg-emerald-50/30">
+<label class="relative flex items-center cursor-pointer px-3">
+<input class="peer hidden" name="correct_answer" tabindex="-1" type="radio"/>
+<div class="w-6 h-6 border-2 border-slate-200 rounded-full peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+</label>
+<div class="flex-1">
+<span class="block text-[10px] font-bold text-slate-400 mb-0.5">الخيار ج</span>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface font-semibold placeholder:text-slate-300 outline-none" placeholder="أدخل الإجابة الثالثة" tabindex="4" type="text"/>
+</div>
+</div>
+<div class="rapid-input group flex items-center gap-4 bg-white p-2 rounded-xl border-2 border-slate-100 transition-all focus-within:border-primary focus-within:bg-emerald-50/30">
+<label class="relative flex items-center cursor-pointer px-3">
+<input class="peer hidden" name="correct_answer" tabindex="-1" type="radio"/>
+<div class="w-6 h-6 border-2 border-slate-200 rounded-full peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+</label>
+<div class="flex-1">
+<span class="block text-[10px] font-bold text-slate-400 mb-0.5">الخيار د</span>
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface font-semibold placeholder:text-slate-300 outline-none" placeholder="أدخل الإجابة الرابعة" tabindex="5" type="text"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Metadata & Settings -->
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-low p-6 rounded-2xl space-y-6 sticky top-24 border border-slate-200">
+<h4 class="text-sm font-black text-primary uppercase tracking-widest border-b border-outline-variant/20 pb-4 flex items-center justify-between">
+                            تصنيف السؤال
+                            <span class="material-symbols-outlined text-slate-400 text-lg" data-icon="settings_input_component">settings_input_component</span>
+</h4>
+<!-- Form Selectors for Speed -->
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-2">المادة</label>
+<div class="relative">
+<select class="w-full bg-white border-2 border-slate-100 rounded-lg px-4 py-3 appearance-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm cursor-pointer outline-none transition-all" tabindex="6">
+<option>الرياضيات</option>
+<option>الفيزياء</option>
+<option>اللغة العربية</option>
+<option>التاريخ</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 pointer-events-none" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-2">المستوى</label>
+<div class="relative">
+<select class="w-full bg-white border-2 border-slate-100 rounded-lg px-4 py-3 appearance-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm cursor-pointer outline-none transition-all" tabindex="7">
+<option>السنة الأولى</option>
+<option>السنة الثانية</option>
+<option>السنة الثالثة (بكالوريا)</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 pointer-events-none" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-2">الصعوبة</label>
+<div class="relative">
+<select class="w-full bg-white border-2 border-slate-100 rounded-lg px-4 py-3 appearance-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm cursor-pointer outline-none transition-all" tabindex="8">
+<option>سهل</option>
+<option>متوسط</option>
+<option>صعب</option>
+<option>تحدي</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 pointer-events-none" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-200">
+<button class="w-full bg-white border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-emerald-50 transition-all flex items-center justify-center gap-2 group mb-4" tabindex="9">
+<span class="material-symbols-outlined group-hover:rotate-180 transition-transform" data-icon="sync">sync</span>
+                                تبديل عشوائي للخيارات
+                            </button>
+<div class="h-24 rounded-xl overflow-hidden relative group cursor-pointer border-2 border-dashed border-slate-300 hover:border-primary transition-colors">
+<img alt="Academic Background" class="object-cover w-full h-full opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-40 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBel8CPZhOp0Nav5jefz2fT1RJyPAanBj9H0l3g9DpYtzpAaUxsGbVStVphMubpYKAtCIPFrvkV_cIu5S7qgLpFjDgdxvVMos1NBZcPU7YIf7f4gu74jhEKjQ7YePxESMpa2lbUi7Dny6_MbuGbRlRUeQoVFHVY6Bd1_4pvc8QKCXFxOUIHzPWOZthWERhO6URjpgiQU5CUw4oznr7xud35YIRuf0mBz5k6Pzez3SOoh3VxsQtT3SXDQsQyGQdvh1oGMrdljRaoxoI"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="flex items-center gap-2 bg-white/80 backdrop-blur px-3 py-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="visibility">visibility</span>
+<span class="text-primary font-bold text-xs">معاينة سريعة</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Mobile Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg flex justify-around py-4 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] border-t border-slate-100">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="text-[10px] font-bold">جديد</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="text-[10px] font-bold">البنك</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold">الرئيسية</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-bold">الإعدادات</span>
+</button>
+</nav>
+</body></html>

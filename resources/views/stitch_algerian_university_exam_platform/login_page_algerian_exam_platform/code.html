@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>تسجيل الدخول - بوابة أثينيوم للامتحانات</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#b6d0ff",
+                    "tertiary-fixed-dim": "#ffb5a1",
+                    "surface-tint": "#29695b",
+                    "on-tertiary-fixed-variant": "#6d382a",
+                    "secondary": "#465f88",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#94d3c1",
+                    "on-background": "#191c1d",
+                    "inverse-surface": "#2e3132",
+                    "on-primary-fixed": "#00201a",
+                    "on-primary-fixed-variant": "#065043",
+                    "tertiary-container": "#693527",
+                    "primary-container": "#004d40",
+                    "surface-container-low": "#f3f4f5",
+                    "on-surface-variant": "#3f4945",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#3f5881",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-surface": "#191c1d",
+                    "surface": "#f8f9fa",
+                    "surface-container-high": "#e7e8e9",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e1e3e4",
+                    "on-primary-container": "#7ebdac",
+                    "secondary-fixed-dim": "#aec7f7",
+                    "surface-dim": "#d9dadb",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f8f9fa",
+                    "surface-container": "#edeeef",
+                    "background": "#f8f9fa",
+                    "primary": "#00342b",
+                    "tertiary-fixed": "#ffdbd1",
+                    "outline-variant": "#bfc9c4",
+                    "surface-container-highest": "#e1e3e4",
+                    "outline": "#707975",
+                    "on-secondary-fixed": "#001b3d",
+                    "secondary-fixed": "#d6e3ff",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#2e476f",
+                    "inverse-primary": "#94d3c1",
+                    "on-tertiary-fixed": "#370e04",
+                    "on-tertiary-container": "#e89f8c",
+                    "tertiary": "#4e2013",
+                    "primary-fixed": "#afefdd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Public Sans", "Cairo"],
+                    "body": ["Inter", "Cairo"],
+                    "label": ["Inter", "Cairo"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Cairo', 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #00342b 0%, #004d40 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full bg-white/70 backdrop-blur-md z-50 shadow-sm px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="text-xl font-bold text-emerald-900 font-headline tracking-tight">Atheneum Exam Portal</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full hover:bg-emerald-50 transition-colors text-emerald-900" title="تغيير اللغة">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</button>
+<button class="p-2 rounded-full hover:bg-emerald-50 transition-colors text-emerald-900" title="الوضع الليلي">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-4 bg-surface">
+<div class="max-w-6xl w-full flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_20px_40px_rgba(25,28,29,0.06)] min-h-[600px]">
+<!-- Branding/Hero Section (Asymmetric) -->
+<div class="hidden md:flex md:w-1/2 relative overflow-hidden bg-primary p-12 flex-col justify-between text-on-primary">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+</div>
+<div class="relative z-10">
+<div class="text-3xl font-extrabold font-headline mb-4">بوابة الامتحانات الجامعية</div>
+<div class="h-1 w-20 bg-primary-fixed mb-8"></div>
+<p class="text-lg opacity-90 leading-relaxed font-body">
+                        أهلاً بكم في المنصة الرقمية الرسمية للامتحانات. نضمن لكم تجربة تقييم عادلة، آمنة ومتطورة تليق بمستوى التميز الأكاديمي الجزائري.
+                    </p>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-8">
+<div class="p-3 bg-white/10 backdrop-blur-lg rounded-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="school">school</span>
+</div>
+<div>
+<div class="text-sm font-label uppercase tracking-widest opacity-70">المؤسسة</div>
+<div class="text-xl font-bold">الأثينيوم الأكاديمي الجزائري</div>
+</div>
+</div>
+</div>
+<!-- Abstract Decorative Element -->
+<div class="absolute -bottom-24 -right-24 w-80 h-80 bg-primary-container rounded-full opacity-50 blur-3xl"></div>
+</div>
+<!-- Login Form Section -->
+<div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
+<div class="mb-10 text-center md:text-right">
+<h1 class="text-3xl font-bold text-on-surface mb-2 font-headline">تسجيل الدخول</h1>
+<p class="text-on-surface-variant font-body">الرجاء إدخال بيانات الاعتماد الخاصة بك للوصول إلى المنصة</p>
+</div>
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant pr-1" for="email">البريد الإلكتروني الجامعي</label>
+<div class="relative">
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-outline">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<input class="w-full pr-12 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-surface-tint transition-all text-on-surface placeholder:text-outline" id="email" name="email" placeholder="name@univ-alger.dz" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<label class="block text-sm font-semibold text-on-surface-variant" for="password">كلمة السر</label>
+<a class="text-sm font-semibold text-primary hover:text-primary-container transition-colors" href="#">نسيت كلمة السر؟</a>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-outline">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<input class="w-full pr-12 py-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-surface-tint transition-all text-on-surface" id="password" name="password" required="" type="password"/>
+<button class="absolute inset-y-0 left-0 flex items-center pl-4 text-outline hover:text-on-surface" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me Toggle -->
+<div class="flex items-center gap-3 px-1">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-surface-tint" id="remember" type="checkbox"/>
+<label class="text-sm text-on-surface-variant font-medium" for="remember">تذكرني على هذا الجهاز</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full py-4 px-6 btn-gradient text-on-primary rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transform active:scale-[0.98] transition-all flex justify-center items-center gap-3" type="submit">
+<span>تسجيل الدخول</span>
+<span class="material-symbols-outlined" data-icon="login">login</span>
+</button>
+</form>
+<!-- Role Selection Hint -->
+<div class="mt-12 pt-8 border-t border-surface-container-high text-center">
+<p class="text-sm text-on-surface-variant mb-4 font-body">هل أنت مستخدم جديد؟</p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="px-6 py-2 rounded-full border border-outline-variant text-primary font-semibold text-sm hover:bg-emerald-50 transition-colors">تفعيل حساب طالب</button>
+<button class="px-6 py-2 rounded-full border border-outline-variant text-primary font-semibold text-sm hover:bg-emerald-50 transition-colors">بوابة الأساتذة</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 bg-emerald-50 text-emerald-900">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 w-full gap-6">
+<div class="text-lg font-black font-headline uppercase tracking-tight">Atheneum</div>
+<div class="flex gap-8 font-label text-xs uppercase tracking-widest">
+<a class="text-emerald-700/60 hover:text-emerald-900 transition-opacity opacity-80 hover:opacity-100" href="#">الدعم الفني</a>
+<a class="text-emerald-700/60 hover:text-emerald-900 transition-opacity opacity-80 hover:opacity-100" href="#">سياسة الخصوصية</a>
+<a class="text-emerald-700/60 hover:text-emerald-900 transition-opacity opacity-80 hover:opacity-100" href="#">الوصول المؤسسي</a>
+</div>
+<div class="text-xs uppercase tracking-widest opacity-80 font-label">
+                © 2024 Algerian Academic Atheneum. All Rights Reserved.
+            </div>
+</div>
+</footer>
+<!-- Decorative Progress Aura (as per design system) -->
+<div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-l from-primary via-primary-container to-transparent opacity-30 z-[60]"></div>
+</body></html>

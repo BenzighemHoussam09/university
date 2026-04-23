@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Algiers Atheneum - Live Monitoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f8f9fa",
+                        "error": "#ba1a1a",
+                        "surface": "#f8f9fa",
+                        "surface-container-high": "#e7e8e9",
+                        "background": "#f8f9fa",
+                        "secondary-fixed-dim": "#aec7f7",
+                        "on-secondary-fixed-variant": "#2e476f",
+                        "on-surface": "#191c1d",
+                        "on-background": "#191c1d",
+                        "surface-container": "#edeeef",
+                        "primary-container": "#004d40",
+                        "tertiary-fixed-dim": "#ffb5a1",
+                        "on-tertiary-fixed": "#370e04",
+                        "primary-fixed-dim": "#94d3c1",
+                        "outline": "#707975",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#ffdbd1",
+                        "on-primary-fixed-variant": "#065043",
+                        "on-primary-fixed": "#00201a",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-tertiary-fixed-variant": "#6d382a",
+                        "surface-container-low": "#f3f4f5",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#465f88",
+                        "on-secondary-fixed": "#001b3d",
+                        "primary-fixed": "#afefdd",
+                        "inverse-surface": "#2e3132",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-container": "#7ebdac",
+                        "tertiary-container": "#693527",
+                        "primary": "#00342b",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#4e2013",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d6e3ff",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-container": "#b6d0ff",
+                        "on-secondary-container": "#3f5881",
+                        "inverse-primary": "#94d3c1",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#29695b",
+                        "outline-variant": "#bfc9c4",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#3f4945",
+                        "on-tertiary-container": "#e89f8c",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Public Sans", "Tajawal"],
+                        "body": ["Inter", "Tajawal"],
+                        "label": ["Inter", "Tajawal"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Tajawal', sans-serif; }
+        .font-headline { font-family: 'Public Sans', 'Tajawal', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* No border rule application */
+        * { border-color: transparent !important; }
+        .no-line-card { border: none !important; }
+        /* Tonal depth */
+        .tonal-shift-bg { background-color: #f3f4f5; }
+        
+        /* Custom scrollbar for activity feed */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 52, 43, 0.1);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 52, 43, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 bg-slate-50 dark:bg-teal-950 flex flex-col py-6 space-y-2 font-public-sans text-sm flex-shrink-0">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div>
+<h1 class="font-bold text-teal-800 dark:text-teal-200 leading-tight">National Exam Portal</h1>
+<p class="text-[10px] text-teal-700/60 dark:text-teal-300/60 uppercase tracking-widest">Algerian Academic Board</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Live Monitor -->
+<a class="flex items-center gap-3 px-4 py-3 bg-teal-800 text-white dark:bg-teal-600 dark:text-teal-50 rounded-lg mx-2 transition-all ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span class="font-medium">Live Monitor</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-teal-800/70 dark:text-teal-200/70 hover:bg-teal-100/50 dark:hover:bg-teal-900/50 rounded-lg mx-2 transition-all ease-in-out hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Student List</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-teal-800/70 dark:text-teal-200/70 hover:bg-teal-100/50 dark:hover:bg-teal-900/50 rounded-lg mx-2 transition-all ease-in-out hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span>Proctoring Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-teal-800/70 dark:text-teal-200/70 hover:bg-teal-100/50 dark:hover:bg-teal-900/50 rounded-lg mx-2 transition-all ease-in-out hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-teal-800/70 dark:text-teal-200/70 hover:bg-teal-100/50 dark:hover:bg-teal-900/50 rounded-lg mx-2 transition-all ease-in-out hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+<span>Support</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-lg font-bold shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                New Exam
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 mt-4 text-error hover:bg-error-container/20 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar Component -->
+<header class="fixed top-0 left-0 right-64 z-50 flex justify-between items-center px-8 h-16 w-full bg-white/70 dark:bg-teal-950/70 backdrop-blur-md shadow-sm shadow-teal-900/5 font-public-sans tracking-tight">
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-teal-700/60 uppercase tracking-tighter">Current Exam</span>
+<h2 class="text-lg font-extrabold text-teal-900 dark:text-teal-100">Advanced Data Structures <span class="font-normal opacity-50 ml-2">CS302</span></h2>
+</div>
+<div class="flex items-center bg-primary-container/10 px-4 py-1.5 rounded-full text-primary font-bold">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="timer">timer</span>
+<span class="tabular-nums">01:12:45</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-primary font-semibold hover:bg-primary/5 rounded-lg transition-colors">Export Log</button>
+<button class="px-6 py-2 bg-error text-on-error rounded-lg font-bold shadow-md hover:bg-error/90 transition-all active:scale-95">End Session</button>
+<div class="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
+<button class="p-2 text-teal-700 hover:bg-teal-50 rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-white"></span>
+</button>
+<img alt="Teacher Profile" class="w-8 h-8 rounded-full object-cover" data-alt="Close up portrait of a professional university professor in a light blue shirt with a scholarly and focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5THI3G8KXAjyLYuMPnaW8vGIDbGJazGE34WGwrDvi_vfceO9srpgyS_nU3yyzLv6wrK0Hu7apUt3nkWyWLCozIQqwNAv2OLpzDmU7WHF1b--dFjjZJLIHYCeeO7wcvfUguw6o4VAFXw7VsAiYqMUI_fTztqQVNXClzTIh3V56ohqXfMsE5Xx8Dpp_O3ZNIW8eqn99qexBupS4oLddsb8I--qrGtB-MUK4Zlg7mrZvZ-XTioyxh1X1bK7Qmx3IzoojHOL_qWUk9fc"/>
+</div>
+</header>
+<div class="flex-1 flex overflow-hidden">
+<!-- Main Content Area -->
+<main class="flex-1 mt-16 p-8 overflow-y-auto">
+<div class="max-w-6xl mx-auto space-y-8">
+<!-- Overview Stats (Asymmetric Layout) -->
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-sm font-bold text-outline uppercase tracking-widest mb-4">Exam Vitality</h3>
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-4xl font-headline font-extrabold text-primary">142 / 145</p>
+<p class="text-sm text-on-surface-variant font-medium">Students currently connected</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-headline font-bold text-secondary">98%</p>
+<p class="text-xs text-outline uppercase tracking-tighter">Completion Rate</p>
+</div>
+</div>
+</div>
+<!-- Progress Aura (Design System 5) -->
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+</div>
+<div class="col-span-4 bg-primary-container p-8 rounded-xl text-on-primary-container relative">
+<span class="material-symbols-outlined absolute top-6 left-6 opacity-20 text-4xl" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h3 class="text-sm font-bold uppercase tracking-widest mb-4">Critical Alerts</h3>
+<p class="text-3xl font-headline font-extrabold mb-1">03</p>
+<p class="text-sm font-medium opacity-80">Students with connection drops</p>
+</div>
+</div>
+<!-- Main Monitoring Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-8 py-6 flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-headline font-bold text-primary text-xl">Live Session Monitor</h3>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="pr-10 pl-4 py-2 bg-surface-container-highest rounded-lg focus:ring-2 focus:ring-surface-tint border-none text-sm w-64" placeholder="Search by student name or ID..." type="text"/>
+</div>
+<button class="p-2 bg-surface-container-highest rounded-lg">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+</div>
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-outline text-xs uppercase tracking-widest font-bold">
+<th class="px-8 py-4">Student Name</th>
+<th class="px-6 py-4">Current Progress</th>
+<th class="px-6 py-4">Time Remaining</th>
+<th class="px-6 py-4 text-center">Status</th>
+<th class="px-6 py-4">Last Activity</th>
+<th class="px-8 py-4 text-left">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest/10">
+<!-- Table Row: Connected -->
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait of a young adult student with a neutral expression against a plain background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsPHKndRY6_NQlc4zzHoLHrVEdBUsqG98P-nddjUIVk5LIlsxIwfWe7pqVb2L1N846n5tZ6yUILFZ78uPW-IElw5XojWCPeo5PHQpVh0bVDrFzYaj5Eaz7SC1SYpJibADoAXZU3VtBHeWosw1XfHCj-5rdfXijpL9HJlyVWVZMjZQXKGQqAcm3X45YKH_q7qpDitvGBD6PyjRbZKXuvD-ezLbq1736MpGqlFNb5UdNNGlEOlKR2-rdsnr9Ncg7CKSD6hyEWmqwaac"/>
+<div>
+<p class="font-bold text-on-surface">Ahmed Ben Ali</p>
+<p class="text-xs text-outline font-medium">ID: 2121350042</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="w-full max-w-[120px]">
+<p class="text-sm font-bold text-primary mb-1">34 / 50</p>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 68%;"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-headline font-bold text-on-surface-variant tabular-nums">00:42:15</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                            Connected
+                                        </span>
+</td>
+<td class="px-6 py-5 text-sm text-outline">Just now</td>
+<td class="px-8 py-5 text-left">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-all" title="View Screen">
+<span class="material-symbols-outlined" data-icon="desktop_windows">desktop_windows</span>
+</button>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-all" title="Message">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Table Row: Disconnected -->
+<tr class="bg-error-container/30 hover:bg-error-container/50 transition-colors group">
+<td class="px-8 py-5 border-r-4 border-error/20">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait of a young woman student looking concerned with focused lighting on face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw3K2t15M_6Fg3r9_Mgaonc6rtZWRwUQf5RHr05UVn3a8BgNw-3DRaxkBs5nfzxh426xxs1FyMY5fgHg7pxdAUyZN-EMG9efXUiTVf46avt7h1J6mo9_vbx7IsAKnQqXH_evptNKOIJiAfU616JPv6g7JvO371Yev7N6vvKSviCu2bf-W7JXSFNTpeLg1lSQxGYz4suQnu5Ru0PPdtDfSUrsgbq7SA-Y8oT5Jko7eIymDvcHhAJSf7c6jr6fDYc968pX3Wz_u3zec"/>
+<div>
+<p class="font-bold text-on-surface">Fatima Zahra</p>
+<p class="text-xs text-outline font-medium">ID: 2121350098</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-primary">12 / 50</td>
+<td class="px-6 py-5 font-headline font-bold text-error tabular-nums">--:--:--</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error/10 text-error text-xs font-bold">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                                            Disconnected
+                                        </span>
+</td>
+<td class="px-6 py-5 text-sm text-error font-bold">2m 45s ago</td>
+<td class="px-8 py-5 text-left">
+<div class="flex justify-end gap-2">
+<button class="px-4 py-2 bg-error text-on-error rounded-lg text-xs font-bold shadow-sm">Attempt Reconnect</button>
+</div>
+</td>
+</tr>
+<!-- Table Row: Regular -->
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Clear profile shot of a male student with glasses in a university library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIM1-Z76eihawOl1UtWjQpyz563Xxj7zo-qFTrCfoz7kS4hLJDBDa_qWIMz30jBH5JZyo14cZbPjYg--BfFEw2yOFBAlTRnlOTEFEAVkxQLr6TjgAImEce6j7rcHe8AJM2baGgwkU7YUAedaV9NPTzPqX_POBaguIxRol2dU4de3gwb8xatplP9LsOHjiBdPsJHuPhdA4YFyl35GVHx0oxxqb8pQzSFC524cpnyDJKYiCJOK_-YNN4WyEfT7W1MWoGr_fAox7s8JQ"/>
+<div>
+<p class="font-bold text-on-surface">Mohamed El-Amine</p>
+<p class="text-xs text-outline font-medium">ID: 2121350122</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-primary">48 / 50</td>
+<td class="px-6 py-5 font-headline font-bold text-on-surface-variant tabular-nums">00:08:32</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                                            Connected
+                                        </span>
+</td>
+<td class="px-6 py-5 text-sm text-outline">12s ago</td>
+<td class="px-8 py-5 text-left">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="desktop_windows">desktop_windows</span>
+</button>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Table Row: Regular -->
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait of a young male university student with a subtle smile in natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR5cpbAeaI7D5haqP3TxPBu8RAnP11b2Njv08bdjStDOuJf8HSCnMCyJx1iPGWzWVbZwhQC65D3rrJa3OdChqFoJAhAdI4A3UihynZh4oi6wmngugoaFlGHFLmXC4lnrGEbYWC__qwBa4f-fR41GcKp6o2dycy3WCJ_HJmf54QsvxkeRY8NmalhFRFH3Qqvo2Cxfy2NfjaBhOz3lM3RNULVAy7hNaISSq3GUlg9izElKUmhcyKUlp9RvyDcr9tzNqojUFzQrOFFxY"/>
+<div>
+<p class="font-bold text-on-surface">Yassine Mansour</p>
+<p class="text-xs text-outline font-medium">ID: 2121350551</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-primary">22 / 50</td>
+<td class="px-6 py-5 font-headline font-bold text-on-surface-variant tabular-nums">00:58:10</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                                            Connected
+                                        </span>
+</td>
+<td class="px-6 py-5 text-sm text-outline">5s ago</td>
+<td class="px-8 py-5 text-left">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="desktop_windows">desktop_windows</span>
+</button>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Pagination/Footer (Minimal) -->
+<div class="px-8 py-6 bg-surface-container-low/30 flex justify-between items-center text-sm">
+<span class="text-outline">Showing <span class="font-bold">1 - 25</span> of 145 students</span>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-highest text-outline rounded-lg opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="p-2 bg-surface-container-highest text-primary rounded-lg hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Detail -->
+<div class="flex items-center justify-between opacity-60">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<p class="text-xs font-medium uppercase tracking-widest">System Health: Optimal</p>
+</div>
+<p class="text-xs">Algiers Atheneum Proctored Environment v2.4.0</p>
+</div>
+</div>
+</main>
+<!-- Activity Feed Sidebar (RTL balanced left side) -->
+<aside class="w-80 bg-white border-r border-surface-container flex flex-col mt-16 shadow-lg z-10">
+<div class="p-6 border-b border-surface-container-low">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="pulse">pulse</span>
+                            Live Activity Feed
+                        </h3>
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase tracking-wider">Real-time</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+<!-- Feed Item 1 -->
+<div class="flex gap-4 relative">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="fact_check">fact_check</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-on-surface">Ahmed Ben Ali</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Completed <span class="font-semibold text-primary">Section 3: Sorting</span></p>
+<p class="text-[10px] text-outline mt-1 font-medium">12 seconds ago</p>
+</div>
+</div>
+<!-- Feed Item 2 (Alert) -->
+<div class="flex gap-4 relative">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-lg" data-icon="wifi_off">wifi_off</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-error">Fatima Zahra</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Connection Lost. System attempting recovery...</p>
+<p class="text-[10px] text-outline mt-1 font-medium">2 minutes ago</p>
+</div>
+</div>
+<!-- Feed Item 3 -->
+<div class="flex gap-4 relative">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="login">login</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-on-surface">Yassine Mansour</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Started <span class="font-semibold text-secondary">Section 4: Heaps</span></p>
+<p class="text-[10px] text-outline mt-1 font-medium">5 minutes ago</p>
+</div>
+</div>
+<!-- Feed Item 4 -->
+<div class="flex gap-4 relative">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="save">save</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-on-surface">Mohamed El-Amine</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Saved progress for Question 42</p>
+<p class="text-[10px] text-outline mt-1 font-medium">8 minutes ago</p>
+</div>
+</div>
+<!-- Feed Item 5 (Warning) -->
+<div class="flex gap-4 relative">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-lg" data-icon="tab_unselected">tab_unselected</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-tertiary">Student 2121350992</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Window focus lost (Alt-Tab activity detected)</p>
+<p class="text-[10px] text-outline mt-1 font-medium">15 minutes ago</p>
+</div>
+</div>
+<!-- Feed Item 6 -->
+<div class="flex gap-4 relative">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="task_alt">task_alt</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-on-surface">Karim Meziane</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Exam submitted successfully</p>
+<p class="text-[10px] text-outline mt-1 font-medium">18 minutes ago</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-lowest border-t border-surface-container">
+<button class="w-full py-2 text-xs font-bold text-primary hover:bg-primary/5 rounded-lg transition-colors border border-primary/20">
+                        View Full History Log
+                    </button>
+</div>
+</aside>
+</div>
+</div>
+<!-- Floating Quick Action Button (FAB Rule) -->
+<button class="fixed bottom-8 left-8 bg-gradient-to-br from-primary to-primary-container text-on-primary p-4 rounded-full shadow-2xl shadow-primary/40 hover:scale-105 active:scale-95 transition-all group z-50">
+<span class="material-symbols-outlined text-2xl" data-icon="chat_bubble">chat_bubble</span>
+<span class="absolute left-full ml-4 whitespace-nowrap bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">Broadcast Message</span>
+</button>
+</body></html>
