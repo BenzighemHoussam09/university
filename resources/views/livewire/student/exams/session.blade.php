@@ -16,7 +16,7 @@
         wireId: '{{ $_instance->getId() }}'
     })"
     wire:poll.10s="heartbeat"
-    class="flex flex-col h-screen overflow-hidden"
+    class="flex flex-col h-screen h-dvh overflow-hidden"
 >
     {{-- ========== HEADER ========== --}}
     <header class="bg-primary/95 backdrop-blur-xl flex-shrink-0 z-50 shadow-lg">
@@ -131,7 +131,7 @@
         </aside>
 
         {{-- MAIN CONTENT (scrollable) --}}
-        <main class="flex-1 overflow-y-auto bg-surface-container px-6 md:px-10 lg:px-14 py-6">
+        <main data-scroll-preserve class="flex-1 overflow-y-auto bg-surface-container px-6 md:px-10 lg:px-14 py-6">
 
             {{-- Security notice (always visible) --}}
             <div class="mb-6 bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-4 flex items-start gap-3 max-w-3xl mx-auto shadow-ambient">
@@ -164,6 +164,7 @@
                 @endphp
 
                 <div
+                    wire:key="question-{{ $question->id }}"
                     class="mb-5 bg-surface-container-lowest rounded-xl shadow-ambient p-6 md:p-8 max-w-3xl mx-auto transition-all duration-200
                         {{ $selectedChoiceId ? 'border-t-4 border-primary' : 'border-t-4 border-outline-variant/30' }}"
                     id="q-{{ $question->id }}"

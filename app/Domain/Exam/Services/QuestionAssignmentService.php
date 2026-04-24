@@ -73,13 +73,38 @@ class QuestionAssignmentService
                 continue;
             }
 
-            foreach ($sessions as $session) {
-                $slice = $this->pickForStudent($bankIds, $bankSize, $required);
+            if ($bankSize >= $required) {
+                // Sufficient bank: shared cycling pool so the bank is exhausted before
+                // any question repeats across students.
+                $pool = $bankIds;
+                shuffle($pool);
+                $pos = 0;
 
-                $perSessionQuestions[$session->id] = array_merge(
-                    $perSessionQuestions[$session->id],
-                    $slice
-                );
+                foreach ($sessions as $session) {
+                    // Not enough remaining in current cycle — start a fresh one
+                    if ($pos + $required > $bankSize) {
+                        shuffle($pool);
+                        $pos = 0;
+                    }
+
+                    $slice = array_slice($pool, $pos, $required);
+                    $pos += $required;
+
+                    $perSessionQuestions[$session->id] = array_merge(
+                        $perSessionQuestions[$session->id],
+                        $slice
+                    );
+                }
+            } else {
+                // Insufficient bank: per-student cycling (within-session repeats acceptable)
+                foreach ($sessions as $session) {
+                    $slice = $this->pickForStudent($bankIds, $bankSize, $required);
+
+                    $perSessionQuestions[$session->id] = array_merge(
+                        $perSessionQuestions[$session->id],
+                        $slice
+                    );
+                }
             }
         }
 

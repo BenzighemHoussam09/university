@@ -74,15 +74,35 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
                 }
             });
 
-            // App/window switching detection
+            // App/window switching detection — debounced to avoid false positives from
+            // mobile touch interactions (radio taps briefly blur the window on Android).
+            let _blurTimer = null;
             window.addEventListener('blur', () => {
-                Livewire.find(this.wireId)?.call('recordIncident', 'window_blur');
+                clearTimeout(_blurTimer);
+                _blurTimer = setTimeout(() => {
+                    Livewire.find(this.wireId)?.call('recordIncident', 'window_blur');
+                }, 300);
             });
+            window.addEventListener('focus', () => clearTimeout(_blurTimer));
 
             // Prevent navigation away from exam page
             window.addEventListener('beforeunload', (e) => {
                 e.preventDefault();
                 e.returnValue = '';
+            });
+
+            // Preserve scroll position of the main content area across Livewire re-renders.
+            // Samsung/Android browsers reset overflow-y-auto scroll on DOM morphing.
+            this.$nextTick(() => {
+                const getMain = () => document.querySelector('main[data-scroll-preserve]');
+                document.addEventListener('livewire:before-update', () => {
+                    const main = getMain();
+                    if (main) this._scrollTop = main.scrollTop;
+                });
+                document.addEventListener('livewire:updated', () => {
+                    const main = getMain();
+                    if (main && this._scrollTop !== undefined) main.scrollTop = this._scrollTop;
+                });
             });
 
             // Offline retry loop — flush buffered answers every 3s when online
