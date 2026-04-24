@@ -46,9 +46,13 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
             // Feature-detect fullscreen support (iOS Safari has none at all)
             const el = document.documentElement;
             const canFullscreen = !!(el.requestFullscreen || el.webkitRequestFullscreen);
+            // Android/Samsung browsers exit fullscreen on every tap interaction, causing
+            // the gate overlay to appear after answering the first question. Bypass the
+            // fullscreen gate on mobile — lockdown is still enforced via visibilitychange/blur.
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
-            if (!canFullscreen) {
-                // iOS Safari / unsupported browser — bypass gate, lockdown still active via events
+            if (!canFullscreen || isMobile) {
+                // iOS Safari / Android / unsupported — bypass gate, lockdown active via events
                 this.isFullscreen = true;
             } else {
                 this.isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
