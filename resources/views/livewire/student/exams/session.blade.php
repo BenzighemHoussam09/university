@@ -1,22 +1,22 @@
 @php
-    $totalQuestions  = $assignedQuestions->count();
-    $answeredCount   = count($draftSelections);
-    $unansweredCount = $totalQuestions - $answeredCount;
-    $progressPct     = $totalQuestions > 0 ? round($answeredCount / $totalQuestions * 100) : 0;
-    $examTitle       = $session?->exam?->title ?? 'امتحان';
-    $moduleName      = $session?->exam?->group?->module?->name ?? '';
-    $studentName     = auth('student')->user()?->name ?? '';
-    $studentInitial  = mb_substr($studentName, 0, 1);
+    $totalQuestions = $assignedQuestions->count();
+    $examTitle      = $session?->exam?->title ?? 'امتحان';
+    $moduleName     = $session?->exam?->group?->module?->name ?? '';
+    $studentName    = auth('student')->user()?->name ?? '';
+    $studentInitial = mb_substr($studentName, 0, 1);
 @endphp
 
 <div
     x-data="examSession({
         sessionId: @js($sessionId ?? 0),
         deadlineIso: @js($deadlineIso),
-        wireId: '{{ $_instance->getId() }}'
+        wireId: '{{ $_instance->getId() }}',
+        initialSelections: @js((object) $draftSelections),
+        totalQuestions: @js($totalQuestions),
+        initialIncidentCount: @js($incidentCount)
     })"
     wire:poll.10s="heartbeat"
-    class="flex flex-col h-screen h-dvh overflow-hidden"
+    class="flex flex-col h-screen overflow-hidden"
 >
     {{-- ========== HEADER ========== --}}
     <header class="bg-primary/95 backdrop-blur-xl flex-shrink-0 z-50 shadow-lg">
@@ -58,11 +58,11 @@
 
     {{-- Mobile-only: compact answered progress strip --}}
     <div class="md:hidden flex-shrink-0 bg-surface-container-low border-b border-outline-variant/20 px-4 py-2 flex items-center gap-3">
-        <span class="text-xs font-bold text-on-surface-variant whitespace-nowrap">{{ $answeredCount }}/{{ $totalQuestions }}</span>
+        <span class="text-xs font-bold text-on-surface-variant whitespace-nowrap" x-text="`${answeredCount}/${totalQuestions}`"></span>
         <div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
-            <div class="h-full bg-primary rounded-full transition-all duration-500" style="width: {{ $progressPct }}%"></div>
+            <div class="h-full bg-primary rounded-full transition-all duration-500" :style="`width: ${progressPct}%`"></div>
         </div>
-        <span class="text-xs text-on-surface-variant">{{ $progressPct }}%</span>
+        <span class="text-xs text-on-surface-variant" x-text="`${progressPct}%`"></span>
     </div>
 
     {{-- ========== BODY: Sidebar + Main ========== --}}
@@ -74,13 +74,11 @@
             {{-- Progress header --}}
             <div class="mb-5">
                 <h3 class="font-headline font-bold text-on-surface text-sm mb-1">متصفح الأسئلة</h3>
-                <p class="text-on-surface-variant text-xs mb-3">
-                    {{ $answeredCount }} من {{ $totalQuestions }} تمت الإجابة
-                </p>
+                <p class="text-on-surface-variant text-xs mb-3" x-text="`${answeredCount} من {{ $totalQuestions }} تمت الإجابة`"></p>
                 <div class="h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
                     <div
                         class="h-full bg-primary rounded-full transition-all duration-500"
-                        style="width: {{ $progressPct }}%"
+                        :style="`width: ${progressPct}%`"
                     ></div>
                 </div>
             </div>
@@ -89,18 +87,17 @@
             <div class="grid grid-cols-5 gap-1.5 mb-6">
                 @foreach($assignedQuestions as $item)
                     @php
-                        $q          = $item['question'];
-                        $order      = $item['display_order'];
-                        $isAnswered = isset($draftSelections[$q->id]);
+                        $q     = $item['question'];
+                        $order = $item['display_order'];
                     @endphp
                     <button
                         type="button"
                         onclick="document.getElementById('q-{{ $q->id }}').scrollIntoView({ behavior: 'smooth', block: 'center' })"
                         title="سؤال {{ $order }}"
-                        class="aspect-square flex items-center justify-center rounded-lg text-xs font-bold transition-all duration-200
-                            {{ $isAnswered
-                                ? 'bg-primary text-on-primary shadow-sm'
-                                : 'bg-surface-container-lowest border border-outline-variant/50 text-on-surface-variant hover:bg-surface-container hover:border-primary/40' }}"
+                        :class="isAnswered(@js($q->id))
+                            ? 'bg-primary text-on-primary shadow-sm'
+                            : 'bg-surface-container-lowest border border-outline-variant/50 text-on-surface-variant hover:bg-surface-container hover:border-primary/40'"
+                        class="aspect-square flex items-center justify-center rounded-lg text-xs font-bold transition-all duration-200"
                     >{{ $order }}</button>
                 @endforeach
             </div>
@@ -121,17 +118,17 @@
             <div class="mt-auto p-3 bg-surface-container rounded-xl">
                 <div class="flex justify-between text-xs mb-1">
                     <span class="text-on-surface-variant">أُجيب</span>
-                    <span class="font-bold text-primary">{{ $answeredCount }}</span>
+                    <span class="font-bold text-primary" x-text="answeredCount"></span>
                 </div>
                 <div class="flex justify-between text-xs">
                     <span class="text-on-surface-variant">لم يُجب</span>
-                    <span class="font-bold text-on-surface-variant">{{ $unansweredCount }}</span>
+                    <span class="font-bold text-on-surface-variant" x-text="unansweredCount"></span>
                 </div>
             </div>
         </aside>
 
         {{-- MAIN CONTENT (scrollable) --}}
-        <main data-scroll-preserve class="flex-1 overflow-y-auto bg-surface-container px-6 md:px-10 lg:px-14 py-6">
+        <main class="flex-1 overflow-y-auto bg-surface-container px-6 md:px-10 lg:px-14 py-6">
 
             {{-- Security notice (always visible) --}}
             <div class="mb-6 bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-4 flex items-start gap-3 max-w-3xl mx-auto shadow-ambient">
@@ -144,29 +141,23 @@
                 </div>
             </div>
 
-            {{-- Incident warning (server-rendered, updates on morph) --}}
-            @if($incidentCount > 0)
-                <div class="mb-6 bg-error-container border border-error/20 rounded-xl p-4 flex items-center gap-3 max-w-3xl mx-auto">
-                    <span class="material-symbols-outlined text-error flex-shrink-0 icon-filled">warning</span>
-                    <p class="text-on-error-container font-bold text-sm">
-                        تم تسجيل {{ $incidentCount }} انتهاك(ات) من قواعد الامتحان. يُرجى البقاء في هذه الصفحة.
-                    </p>
-                </div>
-            @endif
+            {{-- Incident warning (Alpine-driven, no re-render needed) --}}
+            <div x-show="incidentCount > 0" x-cloak class="mb-6 bg-error-container border border-error/20 rounded-xl p-4 flex items-center gap-3 max-w-3xl mx-auto">
+                <span class="material-symbols-outlined text-error flex-shrink-0 icon-filled">warning</span>
+                <p class="text-on-error-container font-bold text-sm" x-text="`تم تسجيل ${incidentCount} انتهاك(ات) من قواعد الامتحان. يُرجى البقاء في هذه الصفحة.`"></p>
+            </div>
 
             {{-- Question cards --}}
             @foreach($assignedQuestions as $item)
                 @php
-                    $question        = $item['question'];
-                    $choices         = $item['choices'];
-                    $displayOrder    = $item['display_order'];
-                    $selectedChoiceId = $draftSelections[$question->id] ?? null;
+                    $question     = $item['question'];
+                    $choices      = $item['choices'];
+                    $displayOrder = $item['display_order'];
                 @endphp
 
                 <div
-                    wire:key="question-{{ $question->id }}"
-                    class="mb-5 bg-surface-container-lowest rounded-xl shadow-ambient p-6 md:p-8 max-w-3xl mx-auto transition-all duration-200
-                        {{ $selectedChoiceId ? 'border-t-4 border-primary' : 'border-t-4 border-outline-variant/30' }}"
+                    class="mb-5 bg-surface-container-lowest rounded-xl shadow-ambient p-6 md:p-8 max-w-3xl mx-auto transition-all duration-200"
+                    :class="isAnswered(@js($question->id)) ? 'border-t-4 border-primary' : 'border-t-4 border-outline-variant/30'"
                     id="q-{{ $question->id }}"
                 >
                     {{-- Question header --}}
@@ -182,22 +173,19 @@
                     {{-- Choices --}}
                     <div class="space-y-3">
                         @foreach($choices as $choice)
-                            @php $isSelected = $selectedChoiceId === $choice->id; @endphp
                             <label
-                                class="group flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-150
-                                    has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-1
-                                    {{ $isSelected
-                                        ? 'border-2 border-primary bg-primary-fixed/20 shadow-sm'
-                                        : 'border border-outline-variant/30 bg-surface-container-low hover:bg-surface-container hover:border-primary/30' }}"
+                                :class="isSelected(@js($question->id), @js($choice->id))
+                                    ? 'border-2 border-primary bg-primary-fixed/20 shadow-sm'
+                                    : 'border border-outline-variant/30 bg-surface-container-low hover:bg-surface-container hover:border-primary/30'"
+                                class="group flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-150 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-1"
                             >
                                 {{-- Custom radio circle --}}
-                                <div class="w-5 h-5 rounded-full flex-shrink-0 border-2 flex items-center justify-center transition-all duration-150
-                                    {{ $isSelected
+                                <div class="w-5 h-5 rounded-full flex-shrink-0 border-2 flex items-center justify-center transition-all duration-150"
+                                    :class="isSelected(@js($question->id), @js($choice->id))
                                         ? 'border-primary bg-primary'
-                                        : 'border-outline-variant group-hover:border-primary' }}">
-                                    @if($isSelected)
-                                        <div class="w-2 h-2 rounded-full bg-on-primary"></div>
-                                    @endif
+                                        : 'border-outline-variant group-hover:border-primary'">
+                                    <div class="w-2 h-2 rounded-full bg-on-primary"
+                                         x-show="isSelected(@js($question->id), @js($choice->id))"></div>
                                 </div>
 
                                 {{-- Hidden native radio --}}
@@ -205,14 +193,16 @@
                                     type="radio"
                                     name="q{{ $question->id }}"
                                     value="{{ $choice->id }}"
-                                    {{ $isSelected ? 'checked' : '' }}
+                                    :checked="isSelected(@js($question->id), @js($choice->id))"
                                     x-on:change="saveDraft({{ $question->id }}, {{ $choice->id }})"
                                     class="sr-only"
                                     aria-label="{{ $choice->text }}"
                                 >
 
-                                <span class="leading-relaxed text-base transition-colors
-                                    {{ $isSelected ? 'text-on-primary-fixed-variant font-bold' : 'text-on-surface-variant font-medium' }}">
+                                <span class="leading-relaxed text-base transition-colors"
+                                    :class="isSelected(@js($question->id), @js($choice->id))
+                                        ? 'text-on-primary-fixed-variant font-bold'
+                                        : 'text-on-surface-variant font-medium'">
                                     {{ $choice->text }}
                                 </span>
                             </label>
@@ -334,23 +324,20 @@
 
                 <p class="text-on-surface-variant text-sm leading-relaxed mb-2">
                     أجبت على
-                    <strong class="text-primary">{{ $answeredCount }}</strong>
+                    <strong class="text-primary" x-text="answeredCount"></strong>
                     من أصل
                     <strong class="text-on-surface">{{ $totalQuestions }}</strong>
                     سؤال.
                 </p>
 
-                @if($unansweredCount > 0)
-                    <div class="flex items-center justify-center gap-2 text-sm text-error mb-3">
-                        <span class="material-symbols-outlined text-[16px]">warning</span>
-                        <span>{{ $unansweredCount }} سؤال(ات) لم تُجب عليها.</span>
-                    </div>
-                @else
-                    <div class="flex items-center justify-center gap-2 text-sm text-green-600 mb-3">
-                        <span class="material-symbols-outlined text-[16px]">check_circle</span>
-                        <span>أجبت على جميع الأسئلة.</span>
-                    </div>
-                @endif
+                <div x-show="unansweredCount > 0" class="flex items-center justify-center gap-2 text-sm text-error mb-3">
+                    <span class="material-symbols-outlined text-[16px]">warning</span>
+                    <span x-text="`${unansweredCount} سؤال(ات) لم تُجب عليها.`"></span>
+                </div>
+                <div x-show="unansweredCount === 0" class="flex items-center justify-center gap-2 text-sm text-green-600 mb-3">
+                    <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                    <span>أجبت على جميع الأسئلة.</span>
+                </div>
 
                 <p class="text-on-surface-variant text-xs">هذا الإجراء نهائي ولا يمكن التراجع عنه.</p>
             </div>

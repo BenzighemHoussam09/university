@@ -13,6 +13,7 @@ use App\Models\StudentAnswerIncident;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 /**
@@ -63,6 +64,7 @@ class Session extends Component
      * Heartbeat — called every 10s by wire:poll.
      * Updates last_heartbeat_at and refreshes deadlineIso (picks up extensions).
      */
+    #[Renderless]
     public function heartbeat(): void
     {
         $session = $this->getSession();
@@ -83,6 +85,7 @@ class Session extends Component
     /**
      * Save a draft answer (idempotent).
      */
+    #[Renderless]
     public function saveDraft(int $questionId, int $choiceId): void
     {
         $session = $this->getSession();
@@ -101,6 +104,7 @@ class Session extends Component
      *
      * @param  string  $kind  One of: visibility_hidden|window_blur|navigation_attempt
      */
+    #[Renderless]
     public function recordIncident(string $kind): void
     {
         $validKinds = ['visibility_hidden', 'window_blur', 'navigation_attempt'];

@@ -7,8 +7,9 @@
  * - Prevent page navigation via beforeunload
  * - Offline buffer: queue saveDraft calls in localStorage, retry on reconnect
  * - Countdown: display server-authoritative deadline driven by deadlineIso
+ * - Answer state: tracked locally so Livewire re-renders are never needed
  */
-export function examSession({ sessionId, deadlineIso, wireId }) {
+export function examSession({ sessionId, deadlineIso, wireId, initialSelections, totalQuestions, initialIncidentCount }) {
     return {
         sessionId,
         deadlineIso,
@@ -24,6 +25,31 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
         pendingCount: 0,
         showSubmitModal: false,
         isFullscreen: false,
+
+        // Answer & incident state — managed here; Livewire methods are #[Renderless]
+        answers: initialSelections,
+        totalQuestions,
+        incidentCount: initialIncidentCount,
+
+        get answeredCount() {
+            return Object.keys(this.answers).length;
+        },
+        get unansweredCount() {
+            return this.totalQuestions - this.answeredCount;
+        },
+        get progressPct() {
+            return this.totalQuestions > 0
+                ? Math.round(this.answeredCount / this.totalQuestions * 100)
+                : 0;
+        },
+
+        isAnswered(questionId) {
+            return this.answers[questionId] !== undefined;
+        },
+
+        isSelected(questionId, choiceId) {
+            return this.answers[questionId] === choiceId;
+        },
 
         init() {
             this.deadlineMs = new Date(deadlineIso).getTime();
@@ -61,6 +87,7 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
                     const wasFullscreen = this.isFullscreen;
                     this.isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
                     if (wasFullscreen && !this.isFullscreen) {
+                        this.incidentCount++;
                         Livewire.find(this.wireId)?.call('recordIncident', 'visibility_hidden');
                     }
                 };
@@ -74,6 +101,7 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
             // Tab switching detection
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
+                    this.incidentCount++;
                     Livewire.find(this.wireId)?.call('recordIncident', 'visibility_hidden');
                 }
             });
@@ -84,6 +112,7 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
             window.addEventListener('blur', () => {
                 clearTimeout(_blurTimer);
                 _blurTimer = setTimeout(() => {
+                    this.incidentCount++;
                     Livewire.find(this.wireId)?.call('recordIncident', 'window_blur');
                 }, 300);
             });
@@ -93,20 +122,6 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
             window.addEventListener('beforeunload', (e) => {
                 e.preventDefault();
                 e.returnValue = '';
-            });
-
-            // Preserve scroll position of the main content area across Livewire re-renders.
-            // Samsung/Android browsers reset overflow-y-auto scroll on DOM morphing.
-            this.$nextTick(() => {
-                const getMain = () => document.querySelector('main[data-scroll-preserve]');
-                document.addEventListener('livewire:before-update', () => {
-                    const main = getMain();
-                    if (main) this._scrollTop = main.scrollTop;
-                });
-                document.addEventListener('livewire:updated', () => {
-                    const main = getMain();
-                    if (main && this._scrollTop !== undefined) main.scrollTop = this._scrollTop;
-                });
             });
 
             // Offline retry loop — flush buffered answers every 3s when online
@@ -158,6 +173,9 @@ export function examSession({ sessionId, deadlineIso, wireId }) {
         },
 
         saveDraft(questionId, choiceId) {
+            // Optimistic update — visual state changes immediately, no re-render needed
+            this.answers[questionId] = choiceId;
+
             const payload = { questionId, choiceId, ts: Date.now() };
 
             if (navigator.onLine) {
