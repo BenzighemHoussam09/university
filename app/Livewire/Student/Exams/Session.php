@@ -70,6 +70,8 @@ class Session extends Component
         $session = $this->getSession();
 
         if (! $session || $session->status !== 'active') {
+            $this->dispatch('session-expired');
+
             return;
         }
 
@@ -130,6 +132,16 @@ class Session extends Component
     public function submitFinal(): void
     {
         $session = $this->getSession();
+
+        // Already finalized (e.g., by deadline cron while student was still on page)
+        if ($session && $session->status === 'completed') {
+            $this->redirect(
+                route('student.exams.results', ['exam' => $session->exam_id]),
+                navigate: true
+            );
+
+            return;
+        }
 
         abort_if(! $session || $session->status !== 'active', 422, 'Session is not active.');
 

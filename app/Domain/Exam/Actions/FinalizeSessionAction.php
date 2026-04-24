@@ -97,11 +97,10 @@ class FinalizeSessionAction
 
     private function resolveTemplate(?Teacher $teacher): ?GradingTemplate
     {
-        if ($teacher && $teacher->grading_template_id) {
-            return GradingTemplate::withoutGlobalScopes()
-                ->find($teacher->grading_template_id);
+        if (! $teacher) {
+            return GradingTemplate::withoutGlobalScopes()->find(1);
         }
 
-        return GradingTemplate::withoutGlobalScopes()->find(1);
+        return GradingTemplate::resolveForTeacher($teacher);
     }
 }

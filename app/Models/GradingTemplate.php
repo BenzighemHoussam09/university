@@ -52,4 +52,25 @@ class GradingTemplate extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    /**
+     * Resolve the effective template for a teacher.
+     * Checks teacher's own template first, then teacher's assigned template FK, then system fallback.
+     */
+    public static function resolveForTeacher(Teacher $teacher): ?self
+    {
+        $own = self::withoutGlobalScopes()->where('teacher_id', $teacher->id)->first();
+        if ($own) {
+            return $own;
+        }
+
+        if ($teacher->grading_template_id) {
+            $assigned = self::withoutGlobalScopes()->find($teacher->grading_template_id);
+            if ($assigned) {
+                return $assigned;
+            }
+        }
+
+        return self::withoutGlobalScopes()->find(1);
+    }
 }

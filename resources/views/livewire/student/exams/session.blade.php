@@ -128,7 +128,7 @@
         </aside>
 
         {{-- MAIN CONTENT (scrollable) --}}
-        <main class="flex-1 overflow-y-auto bg-surface-container px-6 md:px-10 lg:px-14 py-6">
+        <main class="flex-1 overflow-y-auto bg-surface-container px-6 md:px-10 lg:px-14 py-6 pb-24">
 
             {{-- Security notice (always visible) --}}
             <div class="mb-6 bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-4 flex items-start gap-3 max-w-3xl mx-auto shadow-ambient">
@@ -216,7 +216,7 @@
     </div>
 
     {{-- ========== FOOTER ========== --}}
-    <footer class="bg-surface-container-lowest/90 backdrop-blur-md border-t border-outline-variant/20 flex-shrink-0 px-6 py-4 flex justify-between items-center shadow-[0_-8px_24px_rgba(25,28,29,0.06)]">
+    <footer class="bg-surface-container-lowest/90 backdrop-blur-md border-t border-outline-variant/20 fixed bottom-0 inset-x-0 z-10 px-6 py-4 flex justify-between items-center shadow-[0_-8px_24px_rgba(25,28,29,0.06)]">
 
         {{-- Auto-save & offline indicators --}}
         <div class="flex items-center gap-4">
@@ -289,6 +289,38 @@
         >
             العودة إلى وضع الامتحان
         </button>
+    </div>
+
+    {{-- ========== TIME UP MODAL ========== --}}
+    <div
+        x-show="showTimeUpModal"
+        x-cloak
+        class="fixed inset-0 z-[300] flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm px-4"
+    >
+        <div
+            x-show="showTimeUpModal"
+            x-cloak
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+            class="bg-surface-container-lowest rounded-2xl shadow-ambient p-8 max-w-sm w-full text-center"
+        >
+            <div class="w-16 h-16 rounded-full bg-error-container mx-auto flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-error text-3xl icon-filled">timer_off</span>
+            </div>
+            <h3 class="font-headline font-bold text-xl text-on-surface mb-2">انتهى وقت الامتحان</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                انتهى الوقت المخصص. سيتم تسليم إجاباتك تلقائياً خلال
+                <strong class="text-error" x-text="autoSubmitCountdown"></strong>
+                ثوانٍ.
+            </p>
+            <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                <div
+                    class="h-full bg-error rounded-full transition-all duration-1000"
+                    :style="`width: ${Math.max(0, autoSubmitCountdown / 3 * 100)}%`"
+                ></div>
+            </div>
+        </div>
     </div>
 
     {{-- ========== SUBMIT CONFIRMATION MODAL ========== --}}

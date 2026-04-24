@@ -31,9 +31,7 @@ class Show extends Component
     private function loadRows(): void
     {
         $teacher = Auth::guard('teacher')->user();
-        $template = GradingTemplate::withoutGlobalScopes()
-            ->where('teacher_id', $teacher->id)
-            ->first();
+        $template = GradingTemplate::resolveForTeacher($teacher);
 
         $students = $this->group->students()->get();
         $moduleId = $this->group->module_id;
@@ -62,9 +60,7 @@ class Show extends Component
     public function saveRow(int $studentId): void
     {
         $teacher = Auth::guard('teacher')->user();
-        $template = GradingTemplate::withoutGlobalScopes()
-            ->where('teacher_id', $teacher->id)
-            ->first();
+        $template = GradingTemplate::resolveForTeacher($teacher);
 
         if (! $template) {
             $this->errorMessage = 'Grading template not found. Please save settings first.';
@@ -135,9 +131,7 @@ class Show extends Component
     public function render(): View
     {
         $teacher = Auth::guard('teacher')->user();
-        $template = GradingTemplate::withoutGlobalScopes()
-            ->where('teacher_id', $teacher->id)
-            ->first();
+        $template = GradingTemplate::resolveForTeacher($teacher);
 
         return view('livewire.teacher.grades.show', [
             'template' => $template,

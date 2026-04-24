@@ -30,16 +30,20 @@ class Monitor extends Component
     /** Tracks which students were connected in the previous poll cycle. */
     public array $previouslyConnected = [];
 
+    /** Tracks incident counts per student_id from the previous poll cycle. */
+    public array $previousIncidentCounts = [];
+
     public function mount(Exam $exam): void
     {
         $this->exam = $exam;
         $this->authorize('view', $exam);
 
-        // Seed initial connection states so the first refresh() can detect transitions.
+        // Seed initial states so the first refresh() can detect transitions.
         $heartbeatMonitor = app(HeartbeatMonitor::class);
         ExamSession::where('exam_id', $this->exam->id)->get()
             ->each(function (ExamSession $session) use ($heartbeatMonitor) {
                 $this->previouslyConnected[$session->student_id] = $heartbeatMonitor->isConnected($session);
+                $this->previousIncidentCounts[$session->student_id] = $session->incidents()->count();
             });
     }
 
@@ -59,6 +63,7 @@ class Monitor extends Component
             ->get();
 
         $newConnectionStates = [];
+        $newIncidentCounts = [];
 
         foreach ($sessions as $session) {
             $connected = $heartbeatMonitor->isConnected($session);
@@ -67,13 +72,31 @@ class Monitor extends Component
             $wasConnected = $this->previouslyConnected[$session->student_id] ?? null;
 
             // Dispatch event only on the connected → disconnected transition.
-            // null (first poll) does NOT count as a transition.
             if ($wasConnected === true && $connected === false) {
                 $this->dispatch('student-disconnected', studentId: $session->student_id, studentName: $session->student?->name ?? '');
+            }
+
+            // Track new violations since last poll.
+            $currentCount = $session->incidents()->count();
+            $newIncidentCounts[$session->student_id] = $currentCount;
+            $prevCount = $this->previousIncidentCounts[$session->student_id] ?? null;
+
+            if ($prevCount !== null && $currentCount > $prevCount) {
+                $latestIncident = $session->incidents()->latest('occurred_at')->first();
+                $this->dispatch(
+                    'student-violation',
+                    studentId: $session->student_id,
+                    studentName: $session->student?->name ?? '',
+                    kind: $latestIncident?->kind instanceof \BackedEnum
+                        ? $latestIncident->kind->value
+                        : (string) ($latestIncident?->kind ?? ''),
+                    total: $currentCount,
+                );
             }
         }
 
         $this->previouslyConnected = $newConnectionStates;
+        $this->previousIncidentCounts = $newIncidentCounts;
     }
 
     /**

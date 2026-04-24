@@ -25,6 +25,10 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
         pendingCount: 0,
         showSubmitModal: false,
         isFullscreen: false,
+        showTimeUpModal: false,
+        timeExpired: false,
+        autoSubmitCountdown: 3,
+        autoSubmitTimer: null,
 
         // Answer & incident state — managed here; Livewire methods are #[Renderless]
         answers: initialSelections,
@@ -55,14 +59,19 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
             this.deadlineMs = new Date(deadlineIso).getTime();
 
             // Watch Livewire deadlineIso for time extensions from teacher
+            // Also listen for server-side session-expired event (cron finalized before client detected)
             this.$nextTick(() => {
                 this.$wire?.$watch('deadlineIso', (iso) => {
                     this.deadlineMs = new Date(iso).getTime();
                 });
+                this.$wire?.on('session-expired', () => this.handleTimeExpired());
             });
 
-            // Countdown tick
+            // Countdown tick — auto-triggers time-up when deadline reached
             this.countdownInterval = setInterval(() => {
+                if (this.deadlineMs > 0 && Date.now() >= this.deadlineMs) {
+                    this.handleTimeExpired();
+                }
                 this.$nextTick(() => {});  // trigger reactivity each second
             }, 1000);
 
@@ -132,9 +141,27 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
             }, 3000);
         },
 
+        handleTimeExpired() {
+            if (this.timeExpired) return;
+            this.timeExpired = true;
+            clearInterval(this.countdownInterval);
+            this.showSubmitModal = false;
+            this.showTimeUpModal = true;
+            this.autoSubmitCountdown = 3;
+
+            this.autoSubmitTimer = setInterval(() => {
+                this.autoSubmitCountdown--;
+                if (this.autoSubmitCountdown <= 0) {
+                    clearInterval(this.autoSubmitTimer);
+                    Livewire.find(this.wireId)?.call('submitFinal');
+                }
+            }, 1000);
+        },
+
         destroy() {
             clearInterval(this.countdownInterval);
             clearInterval(this.retryInterval);
+            clearInterval(this.autoSubmitTimer);
             navigator.keyboard?.unlock();
         },
 

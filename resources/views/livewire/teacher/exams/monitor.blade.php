@@ -11,7 +11,8 @@
 <div
     x-data="monitor()"
     x-on:student-disconnected.window="onStudentDisconnected($event.detail)"
-    wire:poll.5s="refresh"
+    x-on:student-violation.window="onStudentViolation($event.detail)"
+    wire:poll.keep-alive.2s="refresh"
     class="flex h-[calc(100vh-3.5rem)] overflow-hidden"
 >
 
@@ -29,7 +30,7 @@
                         <span class="w-2 h-2 rounded-full {{ $isActive ? 'bg-primary animate-pulse' : 'bg-outline' }}"></span>
                         {{ $isActive ? 'جارٍ' : ($exam->status?->value ?? 'غير معروف') }}
                     </span>
-                    &nbsp;·&nbsp; يتجدد كل 5 ثواني
+                    &nbsp;·&nbsp; يتجدد كل 2 ثانية
                     @if($exam->global_extra_minutes > 0)
                         &nbsp;·&nbsp;
                         <span class="text-primary font-medium">+{{ $exam->global_extra_minutes }} دقيقة إضافية للجميع</span>
@@ -60,6 +61,22 @@
                 </span>
             </div>
             <button @click="alertStudentName = null" class="text-error hover:text-error/70 font-bold text-lg leading-none">✕</button>
+        </div>
+
+        {{-- Violation alert banner --}}
+        <div
+            x-show="alertViolationName !== null"
+            x-cloak
+            x-transition
+            class="bg-error-container/70 border border-error/20 text-on-error-container rounded-xl p-4 flex items-center justify-between gap-4"
+        >
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-error">warning</span>
+                <span class="text-sm font-semibold">
+                    مخالفة جديدة — الطالب "<span x-text="alertViolationName" class="font-bold"></span>"
+                </span>
+            </div>
+            <button @click="alertViolationName = null" class="text-error hover:text-error/70 font-bold text-lg leading-none">✕</button>
         </div>
 
         {{-- Stat cards --}}
@@ -352,7 +369,7 @@
             <div x-show="activityFeed.length === 0" x-cloak
                  class="flex flex-col items-center justify-center h-full py-10 text-on-surface-variant opacity-50">
                 <span class="material-symbols-outlined text-3xl mb-2">history_toggle_off</span>
-                <p class="text-xs text-center">سيظهر السجل هنا عند انقطاع اتصال طالب</p>
+                <p class="text-xs text-center">سيظهر السجل هنا عند انقطاع اتصال طالب أو تسجيل مخالفة</p>
             </div>
 
             {{-- Feed items --}}
@@ -360,15 +377,18 @@
                 <div class="flex gap-3">
                     <div
                         class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm"
-                        :class="item.type === 'disconnect' ? 'bg-error/10 text-error' : 'bg-primary/10 text-primary'"
+                        :class="{
+                            'bg-error/10 text-error': item.type === 'disconnect' || item.type === 'violation',
+                            'bg-primary/10 text-primary': item.type !== 'disconnect' && item.type !== 'violation'
+                        }"
                     >
                         <span class="material-symbols-outlined text-[16px]"
-                              x-text="item.type === 'disconnect' ? 'wifi_off' : 'sensors'"></span>
+                              x-text="item.type === 'disconnect' ? 'wifi_off' : (item.type === 'violation' ? 'warning' : 'sensors')"></span>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p
                             class="text-xs font-bold"
-                            :class="item.type === 'disconnect' ? 'text-error' : 'text-on-surface'"
+                            :class="(item.type === 'disconnect' || item.type === 'violation') ? 'text-error' : 'text-on-surface'"
                             x-text="item.studentName"
                         ></p>
                         <p class="text-xs text-on-surface-variant leading-relaxed mt-0.5" x-text="item.message"></p>
