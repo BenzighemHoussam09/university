@@ -20,7 +20,7 @@
 >
     {{-- ========== HEADER ========== --}}
     <header class="bg-primary/95 backdrop-blur-xl flex-shrink-0 z-50 shadow-lg">
-        <div class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center justify-between px-4 py-3 md:px-6 md:py-4">
 
             {{-- Exam info (RTL: right side) --}}
             <div class="flex items-center gap-4">
@@ -34,10 +34,10 @@
             </div>
 
             {{-- Timer (center) --}}
-            <div class="bg-primary-container/40 px-5 py-2.5 rounded-xl border border-primary-fixed/20 flex items-center gap-3">
-                <span class="material-symbols-outlined text-primary-fixed text-xl">timer</span>
+            <div class="bg-primary-container/40 px-3 py-2 md:px-5 md:py-2.5 rounded-xl border border-primary-fixed/20 flex items-center gap-2 md:gap-3">
+                <span class="material-symbols-outlined text-primary-fixed text-lg md:text-xl">timer</span>
                 <span
-                    class="font-headline font-bold text-xl tracking-tight transition-colors duration-300"
+                    class="font-headline font-bold text-lg md:text-xl tracking-tight transition-colors duration-300"
                     :class="isTimeLow() ? 'text-red-300 animate-pulse' : 'text-primary-fixed'"
                     x-text="formatCountdown()"
                 ></span>
@@ -56,11 +56,20 @@
         </div>
     </header>
 
+    {{-- Mobile-only: compact answered progress strip --}}
+    <div class="md:hidden flex-shrink-0 bg-surface-container-low border-b border-outline-variant/20 px-4 py-2 flex items-center gap-3">
+        <span class="text-xs font-bold text-on-surface-variant whitespace-nowrap">{{ $answeredCount }}/{{ $totalQuestions }}</span>
+        <div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full transition-all duration-500" style="width: {{ $progressPct }}%"></div>
+        </div>
+        <span class="text-xs text-on-surface-variant">{{ $progressPct }}%</span>
+    </div>
+
     {{-- ========== BODY: Sidebar + Main ========== --}}
     <div class="flex flex-1 overflow-hidden">
 
         {{-- SIDEBAR: Question Navigator (right side in RTL — first in DOM) --}}
-        <aside class="w-64 lg:w-72 bg-surface-container-low flex-shrink-0 flex flex-col py-6 px-4 overflow-y-auto">
+        <aside class="hidden md:flex md:w-64 lg:w-72 bg-surface-container-low flex-shrink-0 flex-col py-6 px-4 overflow-y-auto">
 
             {{-- Progress header --}}
             <div class="mb-5">
@@ -238,8 +247,8 @@
 
                 <div class="flex items-center gap-1.5 text-on-surface-variant font-bold text-sm">
                     <span class="material-symbols-outlined text-[16px] icon-filled">cloud_done</span>
-                    <span x-show="isSaving" x-cloak>جارٍ الحفظ...</span>
-                    <span x-show="!isSaving" x-cloak>
+                    <span class="hidden sm:inline" x-show="isSaving" x-cloak>جارٍ الحفظ...</span>
+                    <span class="hidden sm:inline" x-show="!isSaving" x-cloak>
                         <span x-show="lastSavedAt !== null" x-cloak x-text="'تم الحفظ ' + lastSavedAt"></span>
                         <span x-show="lastSavedAt === null" x-cloak>الحفظ التلقائي نشط</span>
                     </span>

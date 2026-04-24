@@ -1,4 +1,4 @@
-<div class="p-6 lg:p-8 space-y-8">
+<div class="p-6 lg:p-8 space-y-8" wire:poll.30s>
 
     {{-- Welcome --}}
     <section>

@@ -23,6 +23,7 @@ class Dashboard extends Component
         $upcomingExams = Exam::whereIn('group_id', $groupIds)
             ->whereIn('status', [ExamStatus::Scheduled, ExamStatus::Active])
             ->with('group.module')
+            ->orderByRaw("(status = 'active') DESC")
             ->orderBy('scheduled_at')
             ->limit(5)
             ->get();
