@@ -7,7 +7,7 @@
             <h1 class="text-2xl font-headline font-bold mb-1">{{ $session->exam?->title ?? 'الامتحان' }}</h1>
             <p class="text-sm opacity-70 mb-7">{{ $session->exam?->group?->module?->name ?? '' }}</p>
 
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-white/10 rounded-xl p-4">
                     <p class="text-[10px] uppercase tracking-wider opacity-70 mb-1 font-label">الإجابات الصحيحة</p>
                     <p class="text-3xl font-headline font-extrabold">
@@ -15,9 +15,9 @@
                     </p>
                 </div>
                 <div class="bg-white/10 rounded-xl p-4 ring-2 ring-primary-fixed/40">
-                    <p class="text-[10px] uppercase tracking-wider opacity-70 mb-1 font-label">الدرجة</p>
+                    <p class="text-[10px] uppercase tracking-wider opacity-70 mb-1 font-label">الدرجة النهائية</p>
                     <p class="text-3xl font-headline font-extrabold">
-                        {{ number_format($scoreComponent, 2) }}<span class="text-lg opacity-60">/20</span>
+                        {{ number_format($finalGrade, 2) }}<span class="text-lg opacity-60">/20</span>
                     </p>
                 </div>
                 <div class="bg-white/10 rounded-xl p-4">
@@ -29,7 +29,7 @@
             </div>
 
             <div class="mt-5">
-                @if($scoreComponent >= 10)
+                @if($finalGrade >= 10)
                     <span class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary-fixed text-on-primary-fixed-variant rounded-full text-sm font-bold">
                         <span class="material-symbols-outlined text-[16px] icon-filled">workspace_premium</span>
                         ناجح

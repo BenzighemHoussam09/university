@@ -5,6 +5,7 @@ namespace App\Livewire\Student\Exams;
 use App\Models\Exam;
 use App\Models\ExamSession;
 use App\Models\ExamSessionQuestion;
+use App\Models\GradeEntry;
 use App\Models\StudentAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -56,10 +57,21 @@ class Results extends Component
                 ];
             });
 
+        $moduleId = $session->exam?->group?->module_id;
+        $gradeEntry = $moduleId
+            ? GradeEntry::withoutGlobalScopes()
+                ->where('student_id', $student->id)
+                ->where('module_id', $moduleId)
+                ->first()
+            : null;
+
+        $finalGrade = $gradeEntry?->final_grade ?? $session->exam_score_component ?? 0.0;
+
         return view('livewire.student.exams.results', [
             'session' => $session,
             'review' => $review,
-            'scoreComponent' => $session->exam_score_component ?? 0.0,
+            'examComponent' => $session->exam_score_component ?? 0.0,
+            'finalGrade' => $finalGrade,
             'rawCorrect' => $session->exam_score_raw ?? 0,
             'total' => $total,
         ]);
