@@ -113,7 +113,7 @@
                     <div>
                         <label for="groupId" class="block text-xs font-bold text-on-surface-variant mb-2 font-cairo">الفوج</label>
                         <div class="relative">
-                            <select wire:model="groupId"
+                            <select wire:model.live="groupId"
                                     id="groupId"
                                     class="w-full bg-surface-container-lowest border-2 border-outline-variant/20 rounded-xl px-4 py-3 appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 shadow-sm cursor-pointer outline-none transition-all font-cairo text-sm">
                                 <option value="">— اختر الفوج —</option>
@@ -162,10 +162,15 @@
                     <div class="grid grid-cols-3 gap-4 mb-4">
                         {{-- Easy --}}
                         <div class="bg-emerald-50 border-2 border-emerald-100 rounded-xl p-4">
-                            <label for="easyCount" class="flex items-center gap-2 text-xs font-bold text-emerald-800 mb-3 font-cairo">
+                            <label for="easyCount" class="flex items-center gap-2 text-xs font-bold text-emerald-800 mb-1 font-cairo">
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
                                 سهل
                             </label>
+                            @if ($groupId)
+                                <p class="text-[10px] text-emerald-600 font-cairo mb-2">{{ $bankCounts['easy'] }} متاح في البنك</p>
+                            @else
+                                <div class="mb-2 h-4"></div>
+                            @endif
                             <input wire:model.live="easyCount"
                                    id="easyCount"
                                    type="number"
@@ -177,10 +182,15 @@
                         </div>
                         {{-- Medium --}}
                         <div class="bg-amber-50 border-2 border-amber-100 rounded-xl p-4">
-                            <label for="mediumCount" class="flex items-center gap-2 text-xs font-bold text-amber-800 mb-3 font-cairo">
+                            <label for="mediumCount" class="flex items-center gap-2 text-xs font-bold text-amber-800 mb-1 font-cairo">
                                 <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
                                 متوسط
                             </label>
+                            @if ($groupId)
+                                <p class="text-[10px] text-amber-600 font-cairo mb-2">{{ $bankCounts['medium'] }} متاح في البنك</p>
+                            @else
+                                <div class="mb-2 h-4"></div>
+                            @endif
                             <input wire:model.live="mediumCount"
                                    id="mediumCount"
                                    type="number"
@@ -192,10 +202,15 @@
                         </div>
                         {{-- Hard --}}
                         <div class="bg-red-50 border-2 border-red-100 rounded-xl p-4">
-                            <label for="hardCount" class="flex items-center gap-2 text-xs font-bold text-red-800 mb-3 font-cairo">
+                            <label for="hardCount" class="flex items-center gap-2 text-xs font-bold text-red-800 mb-1 font-cairo">
                                 <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
                                 صعب
                             </label>
+                            @if ($groupId)
+                                <p class="text-[10px] text-red-500 font-cairo mb-2">{{ $bankCounts['hard'] }} متاح في البنك</p>
+                            @else
+                                <div class="mb-2 h-4"></div>
+                            @endif
                             <input wire:model.live="hardCount"
                                    id="hardCount"
                                    type="number"

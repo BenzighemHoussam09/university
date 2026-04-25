@@ -80,8 +80,8 @@ class CreateExamAction
                 ->where('difficulty', $difficulty)
                 ->count();
 
-            if ($available < $count) {
-                $deficits[$difficulty] = $count - $available;
+            if ($available < 1) {
+                $deficits[$difficulty] = 1 - $available;
             }
         }
 

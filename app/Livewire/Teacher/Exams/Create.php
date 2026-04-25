@@ -4,9 +4,11 @@ namespace App\Livewire\Teacher\Exams;
 
 use App\Domain\Exam\Actions\CreateExamAction;
 use App\Domain\Exam\Exceptions\BankTooSmallException;
+use App\Enums\Difficulty;
 use App\Enums\Level;
 use App\Models\Group;
 use App\Models\Module;
+use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -72,7 +74,7 @@ class Create extends Component
             $this->redirect(route('teacher.exams.show', $exam), navigate: true);
         } catch (BankTooSmallException $e) {
             foreach ($e->deficits as $difficulty => $deficit) {
-                $this->addError("bank.{$difficulty}", "Not enough {$difficulty} questions (need {$deficit} more).");
+                $this->addError("bank.{$difficulty}", "لا توجد أسئلة {$difficulty} في البنك لهذا الفوج.");
             }
         }
     }
@@ -86,9 +88,29 @@ class Create extends Component
             ->orderBy('name')
             ->get();
 
+        $bankCounts = ['easy' => 0, 'medium' => 0, 'hard' => 0];
+
+        if ($this->groupId) {
+            $group = $groups->firstWhere('id', $this->groupId)
+                ?? Group::find($this->groupId);
+
+            if ($group) {
+                $teacher = Auth::guard('teacher')->user();
+                foreach (Difficulty::cases() as $d) {
+                    $bankCounts[$d->value] = Question::withoutGlobalScopes()
+                        ->where('teacher_id', $teacher->id)
+                        ->where('module_id', $group->module_id)
+                        ->where('level', $group->level->value)
+                        ->where('difficulty', $d->value)
+                        ->count();
+                }
+            }
+        }
+
         return view('livewire.teacher.exams.create', [
             'modules' => $modules,
             'groups' => $groups,
+            'bankCounts' => $bankCounts,
         ]);
     }
 }
