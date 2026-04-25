@@ -121,8 +121,10 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
             window.addEventListener('blur', () => {
                 clearTimeout(_blurTimer);
                 _blurTimer = setTimeout(() => {
-                    this.incidentCount++;
-                    Livewire.find(this.wireId)?.call('recordIncident', 'window_blur');
+                    if (!document.hasFocus()) {
+                        this.incidentCount++;
+                        Livewire.find(this.wireId)?.call('recordIncident', 'window_blur');
+                    }
                 }, 300);
             });
             window.addEventListener('focus', () => clearTimeout(_blurTimer));
@@ -139,6 +141,13 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
                     this.flushPending();
                 }
             }, 3000);
+
+            // Diagnostic — remove after identifying root cause
+            this.$watch('isSaving', v => console.log('[exam] isSaving:', v));
+            this.$watch('incidentCount', v => console.log('[exam] incidentCount:', v));
+            this.$watch('showSubmitModal', v => console.log('[exam] showSubmitModal:', v));
+            this.$watch('showTimeUpModal', v => console.log('[exam] showTimeUpModal:', v));
+            this.$watch('isFullscreen', v => console.log('[exam] isFullscreen:', v));
         },
 
         handleTimeExpired() {
