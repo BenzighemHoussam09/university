@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="overflow-hidden h-screen bg-surface text-on-surface" x-data>
+<body class="overflow-hidden h-dvh bg-surface text-on-surface" x-data>
     {{ $slot }}
     @livewireScripts
 </body>
