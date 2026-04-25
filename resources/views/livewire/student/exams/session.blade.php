@@ -16,7 +16,7 @@
         initialIncidentCount: @js($incidentCount)
     })"
     wire:poll.10s="heartbeat"
-    class="flex flex-col h-dvh overflow-hidden"
+    class="flex flex-col h-svh overflow-hidden"
 >
     {{-- ========== HEADER ========== --}}
     <header class="bg-primary/95 backdrop-blur-xl flex-shrink-0 z-50 shadow-lg">
