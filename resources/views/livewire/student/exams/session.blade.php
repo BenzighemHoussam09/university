@@ -177,7 +177,7 @@
                                 :class="isSelected(@js($question->id), @js($choice->id))
                                     ? 'border-2 border-primary bg-primary-fixed/20 shadow-sm'
                                     : 'border border-outline-variant/30 bg-surface-container-low hover:bg-surface-container hover:border-primary/30'"
-                                class="group flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-150 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-1"
+                                class="group relative flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-150 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-1"
                             >
                                 {{-- Custom radio circle --}}
                                 <div class="w-5 h-5 rounded-full flex-shrink-0 border-2 flex items-center justify-center transition-all duration-150"
@@ -188,14 +188,16 @@
                                          x-show="isSelected(@js($question->id), @js($choice->id))"></div>
                                 </div>
 
-                                {{-- Hidden native radio --}}
+                                {{-- Hidden native radio (transparent overlay — NOT sr-only,
+                                     to prevent mobile browsers from scrolling the focused
+                                     off-canvas input into view, which collapses h-svh layout). --}}
                                 <input
                                     type="radio"
                                     name="q{{ $question->id }}"
                                     value="{{ $choice->id }}"
                                     :checked="isSelected(@js($question->id), @js($choice->id))"
                                     x-on:change="saveDraft({{ $question->id }}, {{ $choice->id }})"
-                                    class="sr-only"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     aria-label="{{ $choice->text }}"
                                 >
 
