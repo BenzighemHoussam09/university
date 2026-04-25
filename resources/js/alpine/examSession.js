@@ -67,6 +67,14 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
                 this.$wire?.on('session-expired', () => this.handleTimeExpired());
             });
 
+            // Heartbeat — only fires when tab is visible so background tabs
+        // don't falsely report the student as connected on the monitor.
+            this.heartbeatInterval = setInterval(() => {
+                if (!document.hidden) {
+                    Livewire.find(this.wireId)?.call('heartbeat');
+                }
+            }, 10000);
+
             // Countdown tick — auto-triggers time-up when deadline reached
             this.countdownInterval = setInterval(() => {
                 if (this.deadlineMs > 0 && Date.now() >= this.deadlineMs) {
@@ -162,6 +170,7 @@ export function examSession({ sessionId, deadlineIso, wireId, initialSelections,
         },
 
         destroy() {
+            clearInterval(this.heartbeatInterval);
             clearInterval(this.countdownInterval);
             clearInterval(this.retryInterval);
             clearInterval(this.autoSubmitTimer);

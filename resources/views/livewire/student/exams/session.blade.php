@@ -15,7 +15,6 @@
         totalQuestions: @js($totalQuestions),
         initialIncidentCount: @js($incidentCount)
     })"
-    wire:poll.10s="heartbeat"
     class="flex flex-col h-svh overflow-hidden"
 >
     {{-- ========== HEADER ========== --}}

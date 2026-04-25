@@ -12,6 +12,7 @@
     x-data="monitor()"
     x-on:student-disconnected.window="onStudentDisconnected($event.detail)"
     x-on:student-violation.window="onStudentViolation($event.detail)"
+    x-on:student-submitted.window="onStudentSubmitted($event.detail)"
     wire:poll.keep-alive.2s="refresh"
     class="flex h-[calc(100vh-3.5rem)] overflow-hidden"
 >
@@ -77,6 +78,22 @@
                 </span>
             </div>
             <button @click="alertViolationName = null" class="text-error hover:text-error/70 font-bold text-lg leading-none">✕</button>
+        </div>
+
+        {{-- Submission alert banner --}}
+        <div
+            x-show="alertSubmittedName !== null"
+            x-cloak
+            x-transition
+            class="bg-primary/10 border border-primary/20 text-primary rounded-xl p-4 flex items-center justify-between gap-4"
+        >
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary icon-filled">task_alt</span>
+                <span class="text-sm font-semibold">
+                    الطالب "<span x-text="alertSubmittedName" class="font-bold"></span>" سلّم إجاباته.
+                </span>
+            </div>
+            <button @click="alertSubmittedName = null" class="text-primary hover:text-primary/70 font-bold text-lg leading-none">✕</button>
         </div>
 
         {{-- Stat cards --}}
@@ -379,16 +396,21 @@
                         class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm"
                         :class="{
                             'bg-error/10 text-error': item.type === 'disconnect' || item.type === 'violation',
-                            'bg-primary/10 text-primary': item.type !== 'disconnect' && item.type !== 'violation'
+                            'bg-primary/10 text-primary': item.type === 'submitted',
+                            'bg-surface-container text-on-surface-variant': item.type !== 'disconnect' && item.type !== 'violation' && item.type !== 'submitted'
                         }"
                     >
                         <span class="material-symbols-outlined text-[16px]"
-                              x-text="item.type === 'disconnect' ? 'wifi_off' : (item.type === 'violation' ? 'warning' : 'sensors')"></span>
+                              x-text="item.type === 'disconnect' ? 'wifi_off' : (item.type === 'violation' ? 'warning' : (item.type === 'submitted' ? 'task_alt' : 'sensors'))"></span>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p
                             class="text-xs font-bold"
-                            :class="(item.type === 'disconnect' || item.type === 'violation') ? 'text-error' : 'text-on-surface'"
+                            :class="{
+                                'text-error': item.type === 'disconnect' || item.type === 'violation',
+                                'text-primary': item.type === 'submitted',
+                                'text-on-surface': item.type !== 'disconnect' && item.type !== 'violation' && item.type !== 'submitted'
+                            }"
                             x-text="item.studentName"
                         ></p>
                         <p class="text-xs text-on-surface-variant leading-relaxed mt-0.5" x-text="item.message"></p>

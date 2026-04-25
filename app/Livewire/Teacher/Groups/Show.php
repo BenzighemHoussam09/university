@@ -52,7 +52,7 @@ class Show extends Component
             ],
         ]);
 
-        $plainPassword = Str::random(10);
+        $plainPassword = app()->environment('local') ? 'password' : Str::random(10);
 
         $student = Student::create([
             'teacher_id' => $teacherId,

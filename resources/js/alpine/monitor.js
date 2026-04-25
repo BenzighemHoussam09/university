@@ -12,6 +12,7 @@ export function monitor() {
         showEndConfirm: false,
         alertStudentName: null,
         alertViolationName: null,
+        alertSubmittedName: null,
         activityFeed: [],
         audioCtx: null,
 
@@ -64,11 +65,24 @@ export function monitor() {
             setTimeout(() => this._beep(1100, 0.2), 400);
         },
 
+        _playSubmitSound() {
+            this._beep(660, 0.15);
+            setTimeout(() => this._beep(880, 0.15), 180);
+            setTimeout(() => this._beep(1100, 0.25), 360);
+        },
+
         onStudentDisconnected(detail) {
             const name = detail.studentName || `طالب #${detail.studentId}`;
             this.alertStudentName = name;
             this._playDisconnectSound();
             this.addFeedItem('disconnect', name, 'انقطع الاتصال. يحاول النظام الاسترداد...');
+        },
+
+        onStudentSubmitted(detail) {
+            const name = detail.studentName || `طالب #${detail.studentId}`;
+            this.alertSubmittedName = name;
+            this._playSubmitSound();
+            this.addFeedItem('submitted', name, 'سلّم إجاباته وأنهى الامتحان.');
         },
 
         onStudentViolation(detail) {

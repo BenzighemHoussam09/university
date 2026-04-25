@@ -33,6 +33,9 @@ class Monitor extends Component
     /** Tracks incident counts per student_id from the previous poll cycle. */
     public array $previousIncidentCounts = [];
 
+    /** Tracks session status per student_id from the previous poll cycle. */
+    public array $previousStatuses = [];
+
     public function mount(Exam $exam): void
     {
         $this->exam = $exam;
@@ -44,6 +47,9 @@ class Monitor extends Component
             ->each(function (ExamSession $session) use ($heartbeatMonitor) {
                 $this->previouslyConnected[$session->student_id] = $heartbeatMonitor->isConnected($session);
                 $this->previousIncidentCounts[$session->student_id] = $session->incidents()->count();
+                $this->previousStatuses[$session->student_id] = $session->status instanceof \BackedEnum
+                    ? $session->status->value
+                    : (string) $session->status;
             });
     }
 
@@ -64,10 +70,29 @@ class Monitor extends Component
 
         $newConnectionStates = [];
         $newIncidentCounts = [];
+        $newStatuses = [];
 
         foreach ($sessions as $session) {
+            $currentStatus = $session->status instanceof \BackedEnum
+                ? $session->status->value
+                : (string) $session->status;
+
+            $newStatuses[$session->student_id] = $currentStatus;
+            $prevStatus = $this->previousStatuses[$session->student_id] ?? null;
+
+            // Detect fresh submission: active → completed transition.
+            if ($prevStatus === 'active' && $currentStatus === 'completed') {
+                $this->dispatch('student-submitted', studentId: $session->student_id, studentName: $session->student?->name ?? '');
+            }
+
             $connected = $heartbeatMonitor->isConnected($session);
             $newConnectionStates[$session->student_id] = $connected;
+
+            // Skip connection and violation alerts for completed sessions.
+            if ($currentStatus === 'completed') {
+                $newIncidentCounts[$session->student_id] = $this->previousIncidentCounts[$session->student_id] ?? 0;
+                continue;
+            }
 
             $wasConnected = $this->previouslyConnected[$session->student_id] ?? null;
 
@@ -97,6 +122,7 @@ class Monitor extends Component
 
         $this->previouslyConnected = $newConnectionStates;
         $this->previousIncidentCounts = $newIncidentCounts;
+        $this->previousStatuses = $newStatuses;
     }
 
     /**

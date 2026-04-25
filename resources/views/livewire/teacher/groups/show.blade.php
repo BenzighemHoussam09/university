@@ -27,6 +27,16 @@
         </a>
     </div>
 
+    @if(app()->environment('local'))
+    <div class="flex items-start gap-3 bg-amber-50 border border-amber-300 text-amber-900 rounded-xl px-5 py-4 font-cairo text-sm">
+        <span class="material-symbols-outlined text-amber-500 flex-shrink-0 mt-0.5">construction</span>
+        <div>
+            <p class="font-bold mb-0.5">بيئة التطوير — كلمة المرور الافتراضية</p>
+            <p>كلمة مرور كل طالب يتم إنشاؤه الآن هي <span class="font-mono font-bold bg-amber-100 px-1.5 py-0.5 rounded">password</span>. غيّر <span class="font-mono font-bold">APP_ENV</span> إلى <span class="font-mono font-bold">production</span> قبل الإطلاق الفعلي لإرسال كلمات مرور عشوائية حقيقية.</p>
+        </div>
+    </div>
+    @endif
+
     {{-- Tab bar --}}
     <div class="flex gap-1 bg-surface-container rounded-xl p-1 w-fit flex-wrap"
          role="tablist" aria-label="أقسام إدارة الفوج">
