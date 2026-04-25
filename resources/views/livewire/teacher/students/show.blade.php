@@ -6,7 +6,7 @@
             <nav class="flex items-center gap-1.5 text-sm text-on-surface-variant mb-2 font-cairo">
                 <a href="{{ route('teacher.dashboard') }}" class="hover:text-primary transition-colors">الرئيسية</a>
                 <span class="material-symbols-outlined text-[14px]">chevron_left</span>
-                <a href="{{ route('teacher.groups.index') }}" class="hover:text-primary transition-colors">المجموعات</a>
+                <a href="{{ route('teacher.students.index') }}" class="hover:text-primary transition-colors">الطلاب</a>
                 <span class="material-symbols-outlined text-[14px]">chevron_left</span>
                 <span class="text-on-surface font-semibold">{{ $student->name }}</span>
             </nav>

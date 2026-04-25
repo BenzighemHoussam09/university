@@ -115,6 +115,7 @@
                     ['route' => 'teacher.dashboard',       'icon' => 'dashboard',     'label' => 'الرئيسية'],
                     ['route' => 'teacher.modules',         'icon' => 'menu_book',     'label' => 'المقاييس'],
                     ['route' => 'teacher.groups.index',    'icon' => 'groups',        'label' => 'المجموعات'],
+                    ['route' => 'teacher.students.index',  'icon' => 'school',        'label' => 'الطلاب'],
                     ['route' => 'teacher.questions.index', 'icon' => 'quiz',          'label' => 'الأسئلة'],
                     ['route' => 'teacher.exams.index',     'icon' => 'assignment',    'label' => 'الامتحانات'],
                     ['route' => 'teacher.notifications',   'icon' => 'notifications', 'label' => 'الإشعارات'],

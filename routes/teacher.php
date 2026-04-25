@@ -19,6 +19,7 @@ Route::middleware(['web', 'auth:teacher'])->group(function () {
     Route::get('/teacher/modules', App\Livewire\Teacher\Modules\Index::class)->name('teacher.modules');
     Route::get('/teacher/groups', App\Livewire\Teacher\Groups\Index::class)->name('teacher.groups.index');
     Route::get('/teacher/groups/{group}', Show::class)->name('teacher.groups.show');
+    Route::get('/teacher/students', App\Livewire\Teacher\Students\Index::class)->name('teacher.students.index');
     Route::get('/teacher/students/{student}', App\Livewire\Teacher\Students\Show::class)->name('teacher.students.show');
     Route::get('/teacher/questions', App\Livewire\Teacher\Questions\Index::class)->name('teacher.questions.index');
     Route::get('/teacher/questions/create', Create::class)->name('teacher.questions.create');
