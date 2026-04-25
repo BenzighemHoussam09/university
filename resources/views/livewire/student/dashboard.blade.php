@@ -68,7 +68,7 @@
             </div>
             <h3 class="text-on-surface-variant text-xs font-label uppercase tracking-widest mb-1">عدد الغيابات</h3>
             <span class="text-4xl font-headline font-extrabold text-error">{{ $student->absence_count }}</span>
-            <p class="text-xs text-error mt-2">{{ $remaining }} remaining before block</p>
+            <p class="text-xs text-error mt-2">{{ $remaining }} غياب متبقٍ قبل الحظر</p>
         </div>
         @else
         <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">

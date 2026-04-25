@@ -17,16 +17,20 @@ class Index extends Component
     {
         $student = Auth::guard('student')->user();
 
-        // All exams the student has a session for, grouped by status
+        $groupIds = $student->groups()->pluck('groups.id');
+
         $sessionExamIds = ExamSession::where('student_id', $student->id)
             ->pluck('exam_id');
 
-        $upcoming = Exam::whereIn('id', $sessionExamIds)
+        // Upcoming: all exams in student's groups that are scheduled/active
+        $upcoming = Exam::whereIn('group_id', $groupIds)
             ->whereIn('status', [ExamStatus::Scheduled, ExamStatus::Active])
             ->with('group.module')
+            ->orderByRaw("(status = 'active') DESC")
             ->orderBy('scheduled_at')
             ->get();
 
+        // Past: exams the student actually sat (has a session)
         $past = Exam::whereIn('id', $sessionExamIds)
             ->where('status', ExamStatus::Ended)
             ->with('group.module')
